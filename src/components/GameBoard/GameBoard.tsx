@@ -16,16 +16,16 @@ interface GameBoardProps {
   
   const GameBoard: React.FC<GameBoardProps> = ({ cards, onCardClick, mode }) => {
     return (
-      <div className={styles.gameBoard} data-mode={mode}>
+        <div className={styles.gameBoard} data-mode={mode}>
         {cards.map((card) => (
-          <Card
+            <Card
             key={card.id}
             image={card.image}
             isFlipped={card.isFlipped}
             onClick={() => onCardClick(card.id)}
-          />
+            />
         ))}
-      </div>
+        </div>
     );
   };
 
