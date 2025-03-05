@@ -1,0 +1,23 @@
+.gameBoard {
+    display: grid;
+    justify-content: center;
+    margin: 20px auto;
+  }
+  
+  /* Режим 2x2 */
+  .gameBoard[data-mode="2"] {
+    grid-template-columns: repeat(2, 120px); /* Увеличим размер карточек */
+    gap: 20px; /* Больше отступов для меньшего количества карточек */
+  }
+  
+  /* Режим 4x4 */
+  .gameBoard[data-mode="4"] {
+    grid-template-columns: repeat(4, 80px); /* Уменьшим размер карточек */
+    gap: 15px; /* Средние отступы */
+  }
+  
+  /* Режим 6x6 */
+  .gameBoard[data-mode="6"] {
+    grid-template-columns: repeat(6, 60px); /* Уменьшим размер карточек */
+    gap: 10px; /* Меньше отступов для большего количества карточек */
+  }
