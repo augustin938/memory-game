@@ -9,24 +9,26 @@ interface CardData {
 }
 
 interface GameBoardProps {
-    cards: CardData[];
-    onCardClick: (id: number) => void;
-    mode: number;
-  }
-  
-  const GameBoard: React.FC<GameBoardProps> = ({ cards, onCardClick, mode }) => {
-    return (
-        <div className={styles.gameBoard} data-mode={mode}>
-        {cards.map((card) => (
-            <Card
-            key={card.id}
-            image={card.image}
-            isFlipped={card.isFlipped}
-            onClick={() => onCardClick(card.id)}
-            />
-        ))}
-        </div>
-    );
-  };
+  cards: CardData[];
+  onCardClick: (id: number) => void;
+  mode: number;
+  isClickable: boolean;
+}
+
+const GameBoard: React.FC<GameBoardProps> = ({ cards, onCardClick, mode, isClickable }) => {
+  return (
+    <div className={styles.gameBoard} data-mode={mode}>
+      {cards.map((card) => (
+        <Card
+          key={card.id}
+          image={card.image}
+          isFlipped={card.isFlipped}
+          onClick={() => onCardClick(card.id)}
+          isClickable={isClickable}
+        />
+      ))}
+    </div>
+  );
+};
 
 export default GameBoard;
