@@ -1,23 +1,23 @@
 .gameBoard {
-    display: grid;
-    justify-content: center;
-    margin: 20px auto;
-  }
-  
-  /* Режим 2x2 */
-  .gameBoard[data-mode="2"] {
-    grid-template-columns: repeat(2, 100px); /* Увеличим размер карточек */
-    gap: 20px; /* Больше отступов для меньшего количества карточек */
-  }
-  
-  /* Режим 4x4 */
-  .gameBoard[data-mode="4"] {
-    grid-template-columns: repeat(4, 100px); /* Уменьшим размер карточек */
-    gap: 20px; /* Увеличим отступы */
-  }
-  
-  /* Режим 6x6 */
-  .gameBoard[data-mode="6"] {
-    grid-template-columns: repeat(6, 100px); /* Уменьшим размер карточек */
-    gap: 15px; /* Увеличим отступы */
-  }
+  display: grid;
+  justify-content: center;
+  margin: 20px auto;
+}
+
+/* Режим 2x2 */
+.gameBoard[data-mode="2"] {
+  grid-template-columns: repeat(2, 100px); /* Увеличим размер карточек */
+  gap: 20px; /* Больше отступов для меньшего количества карточек */
+}
+
+/* Режим 4x4 */
+.gameBoard[data-mode="4"] {
+  grid-template-columns: repeat(4, 100px); /* Уменьшим размер карточек */
+  gap: 20px; /* Увеличим отступы */
+}
+
+/* Режим 6x6 */
+.gameBoard[data-mode="6"] {
+  grid-template-columns: repeat(6, 100px); /* Уменьшим размер карточек */
+  gap: 15px; /* Увеличим отступы */
+}

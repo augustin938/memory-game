@@ -1,25 +1,25 @@
 .timer {
-    font-size: 1.2rem;
-    margin-bottom: 10px;
-  }
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
 
-  .infinity {
-    font-size: 2rem;
-    font-weight: bold;
-    animation: pulse 2s infinite;
+.infinity {
+  font-size: 2rem;
+  font-weight: bold;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
   }
-  
-  @keyframes pulse {
-    0% {
-      transform: scale(1);
-      opacity: 1;
-    }
-    50% {
-      transform: scale(1.2);
-      opacity: 0.7;
-    }
-    100% {
-      transform: scale(1);
-      opacity: 1;
-    }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.7;
   }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

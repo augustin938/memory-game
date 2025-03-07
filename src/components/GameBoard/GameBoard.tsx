@@ -1,6 +1,5 @@
-import React from 'react';
-import Card from '../Card/Card';
-import styles from './GameBoard.module.css';
+import Card from "../Card/Card";
+import styles from "./GameBoard.module.css";
 
 interface CardData {
   id: number;
@@ -15,7 +14,12 @@ interface GameBoardProps {
   isClickable: boolean;
 }
 
-const GameBoard: React.FC<GameBoardProps> = ({ cards, onCardClick, mode, isClickable }) => {
+export default function GameBoard({
+  cards,
+  onCardClick,
+  mode,
+  isClickable,
+}: GameBoardProps) {
   return (
     <div className={styles.gameBoard} data-mode={mode}>
       {cards.map((card) => (
@@ -29,6 +33,4 @@ const GameBoard: React.FC<GameBoardProps> = ({ cards, onCardClick, mode, isClick
       ))}
     </div>
   );
-};
-
-export default GameBoard;
+}

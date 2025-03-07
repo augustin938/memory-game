@@ -1,11 +1,12 @@
-import React from 'react';
-import styles from './GameModeSelector.module.css';
+import styles from "./GameModeSelector.module.css";
 
 interface GameModeSelectorProps {
   onSelectMode: (mode: number) => void;
 }
 
-const GameModeSelector: React.FC<GameModeSelectorProps> = ({ onSelectMode }) => {
+export default function GameModeSelector({
+  onSelectMode,
+}: GameModeSelectorProps) {
   return (
     <div className={styles.selector}>
       <h2>Выберите режим игры:</h2>
@@ -14,6 +15,4 @@ const GameModeSelector: React.FC<GameModeSelectorProps> = ({ onSelectMode }) => 
       <button onClick={() => onSelectMode(6)}>6x6</button>
     </div>
   );
-};
-
-export default GameModeSelector;
+}

@@ -1,5 +1,4 @@
-import React from 'react';
-import styles from './Card.module.css';
+import styles from "./Card.module.css";
 
 interface CardProps {
   image: string;
@@ -8,10 +7,15 @@ interface CardProps {
   isClickable: boolean;
 }
 
-const Card: React.FC<CardProps> = ({ image, isFlipped, onClick, isClickable }) => {
+export default function Card({
+  image,
+  isFlipped,
+  onClick,
+  isClickable,
+}: CardProps) {
   return (
     <div
-      className={`${styles.card} ${isFlipped ? styles.flipped : ''}`}
+      className={`${styles.card} ${isFlipped ? styles.flipped : ""}`}
       onClick={isClickable ? onClick : undefined}
     >
       <div className={styles.front}>
@@ -20,6 +24,4 @@ const Card: React.FC<CardProps> = ({ image, isFlipped, onClick, isClickable }) =
       <div className={styles.back}></div>
     </div>
   );
-};
-
-export default Card;
+}
