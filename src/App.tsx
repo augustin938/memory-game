@@ -5,57 +5,42 @@ import Timer from './components/Timer/Timer';
 import Score from './components/Score/Score';
 import Button from './components/Button/Button';
 import GameModeSelector from './components/GameModeSelector/GameModeSelector';
-import TimerTypeSelector from './components/TimerTypeSelector/TimerTypeSelector';
+import TimerTypeSelector from './components/TimerTypeSelector/GameTypeSelector';
+import CardSetSelector from './components/CardSetSelector/CardSetSelector';
 import styles from './App.module.css';
+import { cardSets } from './components/cardSets ';
 
 interface CardData {
   id: number;
   image: string;
   isFlipped: boolean;
 }
+export type GameType = 'normal' | 'reverse' | 'endless';
 
 const App: React.FC = () => {
+
   const [cards, setCards] = useState<CardData[]>([]);
   const [selectedCards, setSelectedCards] = useState<number[]>([]);
   const [moves, setMoves] = useState(0);
   const [time, setTime] = useState(0);
   const [timeLeft, setTimeLeft] = useState(0); // Оставшееся время для таймера "наоборот"
   const [isGameStarted, setIsGameStarted] = useState(false);
-  const [isGameFinished, setIsGameFinished] = useState(false);
   const [showCongratulations, setShowCongratulations] = useState(false);
   const [gameMode, setGameMode] = useState<number | null>(null);
-  const [timerType, setTimerType] = useState<'normal' | 'reverse'>('normal'); // Тип таймера
+  const [gameType, setGameType] = useState<GameType>('normal'); // Тип игры// Тип таймера
   const [showTimerTypeSelector, setShowTimerTypeSelector] = useState(false); // Показывать ли выбор типа таймера
   const [initialTime, setInitialTime] = useState(0); // Начальное время для таймера "наоборот"
   const [isClickable, setIsClickable] = useState(true); // Блокировка кликов
+  const [rounds, setRounds] = useState(0);
+  const [isGamePaused, setIsGamePaused] = useState(false); // Состояние для остановки игры
+  const [cardSet, setCardSet] = useState<keyof typeof cardSets>('classic'); // По умолчанию выбран классический набор
 
   // Генерация карточек
   const generateCards = (mode: number) => {
     const totalCards = mode * mode;
-    const images = [
-      '/src/assets/images/card1.png',
-      '/src/assets/images/card2.png',
-      '/src/assets/images/card3.png',
-      '/src/assets/images/card4.png',
-      '/src/assets/images/card5.png',
-      '/src/assets/images/card6.png',
-      '/src/assets/images/card7.png',
-      '/src/assets/images/card8.png',
-      '/src/assets/images/card9.png',
-      '/src/assets/images/card10.png',
-      '/src/assets/images/card11.png',
-      '/src/assets/images/card12.png',
-      '/src/assets/images/card13.png',
-      '/src/assets/images/card14.png',
-      '/src/assets/images/card15.png',
-      '/src/assets/images/card16.png',
-      '/src/assets/images/card17.png',
-      '/src/assets/images/card18.png',
-    ];
-
-    const selectedImages = images.slice(0, totalCards / 2);
+    const selectedImages = cardSets[cardSet].slice(0, totalCards / 2); // Используем выбранный набор карточек
     const pairedImages = [...selectedImages, ...selectedImages];
-
+  
     const shuffledCards = pairedImages
       .map((image, index) => ({
         id: index + 1,
@@ -63,7 +48,7 @@ const App: React.FC = () => {
         isFlipped: false,
       }))
       .sort(() => Math.random() - 0.5);
-
+  
     setCards(shuffledCards);
   };
 
@@ -74,16 +59,29 @@ const App: React.FC = () => {
   };
 
   // Обработчик выбора типа таймера
-  const handleTimerTypeSelect = (type: 'normal' | 'reverse') => {
-    setTimerType(type);
+  const handleGameTypeSelect = (type: GameType) => {
+    setGameType(type);
     setShowTimerTypeSelector(false);
-    generateCards(gameMode!); // Генерация карточек
+    generateCards(gameMode!);
     setIsGameStarted(false);
-    setIsGameFinished(false);
     setMoves(0);
     setTime(0);
     setTimeLeft(initialTime);
-    setShowCongratulations(false); // Сбрасываем сообщение о победе
+    setShowCongratulations(false);
+    setRounds(0); // Сбрасываем счетчик раундов
+    setIsGamePaused(false); // Сбрасываем состояние остановки игры
+  };
+
+  const handleStopGame = () => {
+    setIsGameStarted(false);
+    setIsGamePaused(true); // Устанавливаем состояние остановки игры
+    setShowCongratulations(true);
+  };
+
+  const handleContinueGame = () => {
+    setIsGameStarted(true);
+    setIsGamePaused(false); // Снимаем состояние остановки игры
+    setShowCongratulations(false);
   };
 
   // Установка начального времени для таймера "наоборот"
@@ -97,16 +95,17 @@ const App: React.FC = () => {
     }
   }, [gameMode]);
 
-  // Запуск таймера
   useEffect(() => {
     let interval: number | undefined;
-
+  
     if (isGameStarted) {
-      if (timerType === 'normal') {
+      if (gameType === 'normal') {
+        // Обычный таймер: увеличиваем время каждую секунду
         interval = setInterval(() => {
           setTime((prevTime) => prevTime + 1);
         }, 1000);
-      } else if (timerType === 'reverse') {
+      } else if (gameType === 'reverse') {
+        // Таймер наоборот: уменьшаем время каждую секунду
         interval = setInterval(() => {
           setTimeLeft((prevTime) => {
             if (prevTime <= 0) {
@@ -121,16 +120,36 @@ const App: React.FC = () => {
         }, 1000);
       }
     }
+  
+    return () => clearInterval(interval); // Очистка интервала при размонтировании
+  }, [isGameStarted, gameType]);
 
-    return () => clearInterval(interval);
-  }, [isGameStarted, timerType]);
+  // Запуск таймера
+  useEffect(() => {
+    if (cards.length > 0 && cards.every((card) => card.isFlipped)) {
+      if (gameType === 'endless') {
+        setRounds((prevRounds) => prevRounds + 1); // Увеличиваем счетчик раундов на 1
+        setTimeout(() => {
+          generateCards(gameMode!);
+          setSelectedCards([]);
+          setMoves(0);
+          setTime(0);
+          setTimeLeft(initialTime);
+          setIsGameStarted(false);
+          setShowCongratulations(false);
+        }, 1000);
+      } else {
+        setIsGameStarted(false);
+        setShowCongratulations(true);
+      }
+    }
+  }, [cards, gameType, gameMode, initialTime]);
 
   // Проверка завершения игры
   useEffect(() => {
     if (cards.length > 0 && cards.every((card) => card.isFlipped)) {
       console.log('Все карточки перевернуты!');
       setIsGameStarted(false);
-      setIsGameFinished(true);
       setShowCongratulations(true);
     }
   }, [cards]);
@@ -140,7 +159,7 @@ const App: React.FC = () => {
     if (!isClickable || cards.find((card) => card.id === id)?.isFlipped) return;
 
     if (!isGameStarted) {
-      setIsGameStarted(true);
+      setIsGameStarted(true); // Запускаем игру и таймер
     }
 
     setIsClickable(false);
@@ -163,7 +182,7 @@ const App: React.FC = () => {
         setSelectedCards([]);
         setIsClickable(true);
 
-        if (timerType === 'reverse') {
+        if (gameType === 'reverse') {
           setTimeLeft((prevTime) => prevTime + 5); // Увеличиваем время на 5 секунд
         }
       } else {
@@ -184,6 +203,13 @@ const App: React.FC = () => {
     }
   };
 
+  const handleCardSetSelect = (set: keyof typeof cardSets) => {
+    setCardSet(set);
+    if (gameMode) {
+      generateCards(gameMode); // Перегенерируем карточки при выборе нового набора
+    }
+  };
+
   // Обработчик новой игры
   const handleNewGame = () => {
     if (gameMode) {
@@ -194,8 +220,8 @@ const App: React.FC = () => {
     setTime(0);
     setTimeLeft(initialTime);
     setIsGameStarted(false);
-    setIsGameFinished(false);
     setShowCongratulations(false);
+    setIsGamePaused(false); // Сбрасываем состояние остановки игры
   };
 
   // Обработчик возврата в главное меню
@@ -207,25 +233,37 @@ const App: React.FC = () => {
     setTime(0);
     setTimeLeft(0);
     setIsGameStarted(false);
-    setIsGameFinished(false);
     setShowCongratulations(false);
+    setIsGamePaused(false); // Сбрасываем состояние остановки игры
   };
 
   return (
     <div className={styles.container}>
       <Header />
       {!gameMode ? (
-        <GameModeSelector onSelectMode={handleModeSelect} />
+        <>
+          <GameModeSelector onSelectMode={handleModeSelect} />
+          <CardSetSelector onSelectCardSet={handleCardSetSelect} /> {/* Добавляем выбор набора карточек */}
+        </>
       ) : showTimerTypeSelector ? (
-        <TimerTypeSelector onSelectTimerType={handleTimerTypeSelect} />
+        <TimerTypeSelector onSelectGameType={handleGameTypeSelect} />
       ) : (
         <>
-          <Timer time={time} timeLeft={timeLeft} timerType={timerType} />
+          <Timer time={time} timeLeft={timeLeft} timerType={gameType} />
           <Score moves={moves} />
           {showCongratulations ? (
             <div className={styles.gameFinished}>
-              <h2>Поздравляем! Вы выиграли!</h2>
+              {isGamePaused ? (
+                <h2>Игра остановлена</h2>
+              ) : gameType === 'endless' ? (
+                <h2>Следующий раунд</h2>
+              ) : (
+                <h2>Поздравляем! Вы выиграли!</h2>
+              )}
               <Button onClick={handleNewGame}>Новая игра</Button>
+              {isGamePaused && (
+                <Button onClick={handleContinueGame}>Продолжить игру</Button>
+              )}
               <Button onClick={handleReturnToMainMenu}>Выйти в главное меню</Button>
             </div>
           ) : (
@@ -236,10 +274,16 @@ const App: React.FC = () => {
                 mode={gameMode}
                 isClickable={isClickable}
               />
+              {gameType === 'endless' && (
+                <div className={styles.rounds}>Раундов завершено: {rounds}</div>
+              )}
               <div className={styles.buttonContainer}>
                 <Button onClick={handleReturnToMainMenu}>Выйти в главное меню</Button>
                 <Button onClick={handleNewGame}>Новая игра</Button>
               </div>
+              {gameType === 'endless' && (
+                <Button onClick={handleStopGame}>Остановить игру</Button>
+              )}
             </>
           )}
         </>
