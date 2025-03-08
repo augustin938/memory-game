@@ -1,14 +1,14 @@
-.selector {
+.timerTypeSelector {
   text-align: center;
   margin-bottom: 20px;
 }
 
-.selector button {
+.timerTypeSelector button {
   margin: 5px;
   padding: 10px 20px;
   font-size: 1rem;
   cursor: pointer;
-  background: linear-gradient(45deg, #09cf26, #6eb300);
+  background: linear-gradient(45deg, #282d32, #0056b3);
   color: white;
   border: none;
   border-radius: 8px;
@@ -16,13 +16,13 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.selector button:hover {
+.timerTypeSelector button:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
-  background: linear-gradient(45deg, #6eb300, #09cf26);
+  background: linear-gradient(45deg, #0056b3, #282d32);
 }
 
-.selector button:active {
+.timerTypeSelector button:active {
   transform: translateY(0);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }

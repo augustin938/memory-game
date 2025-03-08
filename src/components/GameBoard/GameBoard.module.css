@@ -1,30 +1,29 @@
-/* gameboard.css */
 .gameBoard {
   display: grid;
   justify-content: center;
   margin: 20px auto;
-  padding: 10px; /* Отступ внутри игрового поля */
-  border-radius: 15px; /* Закругленные углы */
-  position: relative; /* Для псевдоэлемента */
-  overflow: hidden; /* Чтобы градиент не выходил за пределы */
+  padding: 20px;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
 }
 
-/* Анимированная градиентная рамка */
 .gameBoard::before {
   content: '';
   position: absolute;
-  top: -2px; /* Смещение для рамки */
+  top: -2px;
   left: -2px;
   right: -2px;
   bottom: -2px;
   background: linear-gradient(45deg, #ff00cc, #3333ff, #00ffcc, #ffcc00);
-  background-size: 400% 400%; /* Для анимации */
-  border-radius: 15px; /* Закругленные углы */
-  z-index: -1; /* Помещаем под содержимое */
-  animation: gradientBorder 5s ease infinite; /* Анимация */
+  background-size: 400% 400%;
+  border-radius: 15px;
+  z-index: -1;
+  animation: gradientBorder 5s ease infinite;
 }
 
-/* Анимация для градиента */
 @keyframes gradientBorder {
   0% {
     background-position: 0% 50%;
@@ -37,19 +36,16 @@
   }
 }
 
-/* Режим 2x2 */
 .gameBoard[data-mode="2"] {
   grid-template-columns: repeat(2, 90px);
   gap: 20px;
 }
 
-/* Режим 4x4 */
 .gameBoard[data-mode="4"] {
   grid-template-columns: repeat(4, 90px);
   gap: 20px;
 }
 
-/* Режим 6x6 */
 .gameBoard[data-mode="6"] {
   grid-template-columns: repeat(6, 90px);
   gap: 15px;

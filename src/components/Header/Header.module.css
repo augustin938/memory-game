@@ -1,56 +1,47 @@
-/* header.module.css */
-/* Подключаем красивый шрифт из Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Playfair+Display:wght@700&display=swap');
 
 .header {
   text-align: center;
   margin-bottom: 20px;
   position: relative;
-  padding: 20px 0; /* Увеличиваем отступы */
+  padding: 20px 0;
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.1); /* Легкий фон для контраста */
-  border-radius: 10px; /* Скругленные углы */
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Тень для объема */
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .header h1 {
-  font-family: 'Playfair Display', serif; /* Красивый шрифт */
-  font-size: 3rem; /* Увеличиваем размер шрифта */
-  color: #fff; /* Цвет текста */
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Тень для текста */
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  color: #fff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   margin: 0;
   padding: 10px 0;
   position: relative;
-  z-index: 1; /* Чтобы текст был поверх градиентных рамок */
+  z-index: 1;
 }
 
-/* Анимированная градиентная рамка сверху */
-.header::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px; /* Увеличиваем толщину границы */
-  background: linear-gradient(90deg, #ff00cc, #3333ff, #00ffcc, #ffcc00);
-  background-size: 400% 400%;
-  animation: gradientBorder 5s ease infinite;
-}
-
-/* Анимированная градиентная рамка снизу */
+.header::before,
 .header::after {
   content: '';
   position: absolute;
-  bottom: 0;
   left: 0;
   right: 0;
-  height: 4px; /* Увеличиваем толщину границы */
+  height: 4px;
   background: linear-gradient(90deg, #ff00cc, #3333ff, #00ffcc, #ffcc00);
   background-size: 400% 400%;
   animation: gradientBorder 5s ease infinite;
 }
 
-/* Анимация для градиента */
+.header::before {
+  top: 0;
+}
+
+.header::after {
+  bottom: 0;
+}
+
 @keyframes gradientBorder {
   0% {
     background-position: 0% 50%;

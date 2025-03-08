@@ -1,19 +1,26 @@
-/* button.module.css */
-
 .button {
-  padding: 10px 20px;
+  padding: 12px 24px;
   font-size: 1rem;
+  font-family: 'Montserrat', sans-serif;
   cursor: pointer;
-  background-color: #007bff;
+  background: linear-gradient(45deg, #007bff, #00a038);
   color: white;
   border: none;
-  border-radius: 5px;
-  transition: background-color 0.3s;
-  margin: 2px;
+  border-radius: 8px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 5px;
 }
 
 .button:hover {
-  background-color: #768492;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(45deg, #00a038, #007bff);
+}
+
+.button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .gameFinished {
@@ -23,6 +30,9 @@
 
 .gameFinished h2 {
   margin-bottom: 20px;
+  font-size: 2rem;
+  color: #ffffff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .buttonContainer {

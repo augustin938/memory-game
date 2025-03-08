@@ -1,17 +1,15 @@
-/* cardSetSelector.module.css */
-
-
 .cardSetSelector {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 19px;
-  margin-top: 10px;
+  gap: 20px;
+  margin-top: 20px;
 }
 
 .cardSetSelector h2 {
   font-size: 1.5rem;
   color: #ffffff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
   margin-bottom: 10px;
 }
 
@@ -19,30 +17,21 @@
   padding: 10px 20px;
   font-size: 1rem;
   color: #fff;
-  background-color: #00a038;
+  background: linear-gradient(45deg, #00a038, #6be28c);
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s ease, background-image 0.3s ease;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .cardSetSelector button:hover {
-  background-image: linear-gradient(45deg, #00a038, #6be28c);
-  animation: gradientAnimation 2s infinite;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(45deg, #6be28c, #00a038);
 }
 
 .cardSetSelector button:active {
-  background-color: #008040;
-}
-
-@keyframes gradientAnimation {
-  0% {
-    background-position: 10% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 50% 50%;
-  }
+  transform: translateY(0);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }

@@ -1,11 +1,14 @@
-/* card.module.css */
-
 .card {
-  width: 90px; /* Уменьшим ширину */
-  height: 90px; /* Уменьшим высоту */
+  width: 90px;
+  height: 90px;
   position: relative;
   perspective: 1000px;
   cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.05);
 }
 
 .card .front,
@@ -17,8 +20,8 @@
   left: 0;
   backface-visibility: hidden;
   transition: transform 0.6s;
-  border-radius: 8px; /* Добавим скругление углов */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Добавим тень */
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .card .front {
@@ -26,17 +29,17 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #fff; /* Белый фон для лицевой стороны */
+  background-color: #ffffff;
 }
 
 .card .front img {
-  max-width: 100%; /* Занимает всю ширину карточки */
-  max-height: 100%; /* Занимает всю высоту карточки */
-  border-radius: 8px;
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 12px;
 }
 
 .card .back {
-  background-color: #f0f0f0;
+  background: linear-gradient(45deg, #f0f0f0, #e0e0e0);
 }
 
 .card.flipped .front {

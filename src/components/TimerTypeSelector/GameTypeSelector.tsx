@@ -1,4 +1,4 @@
-import styles from "./GamerTypeSelector.module.css";
+import styles from "./GameTypeSelector.module.css";
 import { GameType } from "../../App";
 
 interface GameTypeSelectorProps {
