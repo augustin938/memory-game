@@ -15,29 +15,31 @@ interface CardData {
   image: string;
   isFlipped: boolean;
 }
+
 export type GameType = "normal" | "reverse" | "endless";
 
 export default function App() {
-  const [cards, setCards] = useState<CardData[]>([]); // Состояние карточек на игровом поле
-  const [selectedCards, setSelectedCards] = useState<number[]>([]); // Выбранные карточки (для сравнения)
-  const [moves, setMoves] = useState(0); // Количество ходов
-  const [time, setTime] = useState(0); // Время, прошедшее с начала игры (для обычного таймера)
-  const [timeLeft, setTimeLeft] = useState(0); // Оставшееся время для таймера "наоборот"
-  const [isGameStarted, setIsGameStarted] = useState(false); // Состояние игры: запущена или нет
-  const [showCongratulations, setShowCongratulations] = useState(false); // Показывать ли сообщение о победе/остановке
-  const [gameMode, setGameMode] = useState<number | null>(null); // Режим игры (2x2, 4x4, 6x6)
-  const [gameType, setGameType] = useState<GameType>("normal"); // Тип игры: обычный, обратный, бесконечный
-  const [showTimerTypeSelector, setShowTimerTypeSelector] = useState(false); // Показывать ли выбор типа таймера
-  const [initialTime, setInitialTime] = useState(0); // Начальное время для таймера "наоборот"
-  const [isClickable, setIsClickable] = useState(true); // Блокировка кликов (чтобы избежать множественных кликов)
-  const [rounds, setRounds] = useState(0); // Количество завершенных раундов (для бесконечного режима)
-  const [isGamePaused, setIsGamePaused] = useState(false); // Состояние паузы игры
-  const [cardSet, setCardSet] = useState<keyof typeof cardSets>("classic"); // Выбранный набор карточек
+  const [cards, setCards] = useState<CardData[]>([]);
+  const [selectedCards, setSelectedCards] = useState<number[]>([]);
+  const [moves, setMoves] = useState(0);
+  const [time, setTime] = useState(0);
+  const [timeLeft, setTimeLeft] = useState(0);
+  const [isGameStarted, setIsGameStarted] = useState(false);
+  const [showCongratulations, setShowCongratulations] = useState(false);
+  const [gameMode, setGameMode] = useState<number | null>(null);
+  const [gameType, setGameType] = useState<GameType>("normal");
+  const [showTimerTypeSelector, setShowTimerTypeSelector] = useState(false);
+  const [initialTime, setInitialTime] = useState(0);
+  const [isClickable, setIsClickable] = useState(true);
+  const [rounds, setRounds] = useState(0);
+  const [isGamePaused, setIsGamePaused] = useState(false);
+  const [cardSet, setCardSet] = useState<keyof typeof cardSets>("classic");
+  const [showTimeUpModal, setShowTimeUpModal] = useState(false); // Новое состояние для меню "Время вышло"
 
   // Генерация карточек
   const generateCards = (mode: number) => {
     const totalCards = mode * mode;
-    const selectedImages = cardSets[cardSet].slice(0, totalCards / 2); // Используем выбранный набор карточек
+    const selectedImages = cardSets[cardSet].slice(0, totalCards / 2);
     const pairedImages = [...selectedImages, ...selectedImages];
 
     const shuffledCards = pairedImages
@@ -51,13 +53,13 @@ export default function App() {
     setCards(shuffledCards);
   };
 
-  // Обработчик выбора режима игры (2x2, 4x4, 6x6)
+  // Обработчик выбора режима игры
   const handleModeSelect = (mode: number) => {
     setGameMode(mode);
-    setShowTimerTypeSelector(true); // Показываем выбор типа таймера
+    setShowTimerTypeSelector(true);
   };
 
-  // Обработчик выбора типа игры (обычный, обратный, бесконечный)
+  // Обработчик выбора типа игры
   const handleGameTypeSelect = (type: GameType) => {
     setGameType(type);
     setShowTimerTypeSelector(false);
@@ -67,21 +69,22 @@ export default function App() {
     setTime(0);
     setTimeLeft(initialTime);
     setShowCongratulations(false);
-    setRounds(0); // Сбрасываем счетчик раундов
-    setIsGamePaused(false); // Сбрасываем состояние остановки игры
+    setRounds(0);
+    setIsGamePaused(false);
+    setShowTimeUpModal(false); // Сбрасываем состояние меню "Время вышло"
   };
 
   // Обработчик остановки игры
   const handleStopGame = () => {
     setIsGameStarted(false);
-    setIsGamePaused(true); // Устанавливаем состояние остановки игры
+    setIsGamePaused(true);
     setShowCongratulations(true);
   };
 
   // Обработчик продолжения игры
   const handleContinueGame = () => {
     setIsGameStarted(true);
-    setIsGamePaused(false); // Снимаем состояние остановки игры
+    setIsGamePaused(false);
     setShowCongratulations(false);
   };
 
@@ -90,7 +93,7 @@ export default function App() {
     if (!isClickable || cards.find((card) => card.id === id)?.isFlipped) return;
 
     if (!isGameStarted) {
-      setIsGameStarted(true); // Запускаем игру и таймер
+      setIsGameStarted(true);
     }
 
     setIsClickable(false);
@@ -134,11 +137,11 @@ export default function App() {
     }
   };
 
-  // Обработчик выбора набора карточек (животные, смайлики и т.д.)
+  // Обработчик выбора набора карточек
   const handleCardSetSelect = (set: keyof typeof cardSets) => {
     setCardSet(set);
     if (gameMode) {
-      generateCards(gameMode); // Перегенерируем карточки при выборе нового набора
+      generateCards(gameMode);
     }
   };
 
@@ -153,7 +156,8 @@ export default function App() {
     setTimeLeft(initialTime);
     setIsGameStarted(false);
     setShowCongratulations(false);
-    setIsGamePaused(false); // Сбрасываем состояние остановки игры
+    setIsGamePaused(false);
+    setShowTimeUpModal(false); // Сбрасываем состояние меню "Время вышло"
   };
 
   // Обработчик возврата в главное меню
@@ -166,9 +170,11 @@ export default function App() {
     setTimeLeft(0);
     setIsGameStarted(false);
     setShowCongratulations(false);
-    setIsGamePaused(false); // Сбрасываем состояние остановки игры
+    setIsGamePaused(false);
+    setShowTimeUpModal(false); // Сбрасываем состояние меню "Время вышло"
   };
-  // Установка начального времени для таймера "наоборот" в зависимости от режима игры
+
+  // Установка начального времени для таймера "наоборот"
   useEffect(() => {
     if (gameMode === 2) {
       setInitialTime(5); // 2x2: 5 секунд
@@ -196,8 +202,7 @@ export default function App() {
             if (prevTime <= 0) {
               clearInterval(interval);
               setIsGameStarted(false);
-              setShowCongratulations(false);
-              alert("Время вышло! Попробуйте еще раз.");
+              setShowTimeUpModal(true); // Показываем меню "Время вышло"
               return 0;
             }
             return prevTime - 1;
@@ -213,7 +218,7 @@ export default function App() {
   useEffect(() => {
     if (cards.length > 0 && cards.every((card) => card.isFlipped)) {
       if (gameType === "endless") {
-        setRounds((prevRounds) => prevRounds + 1); // Увеличиваем счетчик раундов на 1
+        setRounds((prevRounds) => prevRounds + 1);
         setTimeout(() => {
           generateCards(gameMode!);
           setSelectedCards([]);
@@ -245,8 +250,7 @@ export default function App() {
       {!gameMode ? (
         <>
           <GameModeSelector onSelectMode={handleModeSelect} />
-          <CardSetSelector onSelectCardSet={handleCardSetSelect} />{" "}
-          {/* Добавляем выбор набора карточек */}
+          <CardSetSelector onSelectCardSet={handleCardSetSelect} />
         </>
       ) : showTimerTypeSelector ? (
         <TimerTypeSelector onSelectGameType={handleGameTypeSelect} />
@@ -267,6 +271,14 @@ export default function App() {
               {isGamePaused && (
                 <Button onClick={handleContinueGame}>Продолжить игру</Button>
               )}
+              <Button onClick={handleReturnToMainMenu}>
+                Выйти в главное меню
+              </Button>
+            </div>
+          ) : showTimeUpModal ? ( // Меню "Время вышло"
+            <div className={styles.gameFinished}>
+              <h2>Время вышло!</h2>
+              <Button onClick={handleNewGame}>Новая игра</Button>
               <Button onClick={handleReturnToMainMenu}>
                 Выйти в главное меню
               </Button>

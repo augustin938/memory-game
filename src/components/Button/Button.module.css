@@ -1,3 +1,5 @@
+/* button.module.css */
+
 .button {
   padding: 10px 20px;
   font-size: 1rem;
@@ -7,11 +9,11 @@
   border: none;
   border-radius: 5px;
   transition: background-color 0.3s;
-  margin: 5px;
+  margin: 2px;
 }
 
 .button:hover {
-  background-color: #0056b3;
+  background-color: #768492;
 }
 
 .gameFinished {

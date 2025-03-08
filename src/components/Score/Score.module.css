@@ -1,4 +1,29 @@
+/* score.modeule.css */
 .score {
-  font-size: 1.2rem;
+  font-size: 1.5rem; /* Увеличиваем размер шрифта */
   margin-bottom: 10px;
+  font-family: 'Montserrat', sans-serif; /* Красивый шрифт */
+  font-weight: 700; /* Жирный шрифт */
+  color: transparent; /* Прозрачный цвет текста для градиента */
+  background: linear-gradient(45deg, #8a2777, #e10750, #ffffff, #ffcc00); /* Градиент */
+  background-clip: text; /* Применяем градиент к тексту */
+  -webkit-background-clip: text; /* Для поддержки в Safari */
+  animation: gradientText 5s ease infinite; /* Анимация градиента */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Тень для текста */
+  padding: 10px 20px; /* Отступы для текста */
+  border-radius: 10px; /* Скругленные углы */
+  display: inline-block; /* Чтобы градиент применялся к тексту */
+}
+
+/* Анимация для градиентного текста */
+@keyframes gradientText {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }

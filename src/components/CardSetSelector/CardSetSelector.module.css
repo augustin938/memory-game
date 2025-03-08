@@ -1,3 +1,6 @@
+/* cardSetSelector.module.css */
+
+
 .cardSetSelector {
   display: flex;
   flex-direction: column;
@@ -16,17 +19,30 @@
   padding: 10px 20px;
   font-size: 1rem;
   color: #fff;
-  background-color: #007bff;
+  background-color: #00a038;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, background-image 0.3s ease;
 }
 
 .cardSetSelector button:hover {
-  background-color: #0056b3;
+  background-image: linear-gradient(45deg, #00a038, #6be28c);
+  animation: gradientAnimation 2s infinite;
 }
 
 .cardSetSelector button:active {
-  background-color: #004080;
+  background-color: #008040;
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 10% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 50% 50%;
+  }
 }

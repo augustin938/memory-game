@@ -1,6 +1,8 @@
+/* card.module.css */
+
 .card {
-  width: 100px; /* Уменьшим ширину */
-  height: 120px; /* Уменьшим высоту */
+  width: 90px; /* Уменьшим ширину */
+  height: 90px; /* Уменьшим высоту */
   position: relative;
   perspective: 1000px;
   cursor: pointer;

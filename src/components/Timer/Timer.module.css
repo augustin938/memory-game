@@ -1,14 +1,49 @@
+/* timer.module.css */
 .timer {
-  font-size: 1.2rem;
+  font-size: 1.5rem; /* Увеличиваем размер шрифта */
   margin-bottom: 10px;
+  font-family: 'Montserrat', sans-serif; /* Красивый шрифт */
+  font-weight: 700; /* Жирный шрифт */
+  color: transparent; /* Прозрачный цвет текста для градиента */
+  background: linear-gradient(45deg, #ff0000, #9ace0ba3, #001affbf, #0022ff); /* Градиент */
+  background-clip: text; /* Применяем градиент к тексту */
+  -webkit-background-clip: text; /* Для поддержки в Safari */
+  animation: gradientText 5s ease infinite; /* Анимация градиента */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Тень для текста */
+  padding: 10px 20px; /* Отступы для текста */
+  border-radius: 10px; /* Скругленные углы */
+  display: inline-block; /* Чтобы градиент применялся к тексту */
 }
 
 .infinity {
-  font-size: 2rem;
+  font-size: 2.5rem; /* Увеличиваем размер шрифта */
   font-weight: bold;
-  animation: pulse 2s infinite;
+  font-family: 'Montserrat', sans-serif; /* Красивый шрифт */
+  color: transparent; /* Прозрачный цвет текста для градиента */
+  background: linear-gradient(45deg, #ff00cc, #3333ff, #00ffcc, #ffcc00); /* Градиент */
+  background-clip: text; /* Применяем градиент к тексту */
+  -webkit-background-clip: text; /* Для поддержки в Safari */
+  animation: gradientText 5s ease infinite, pulse 2s infinite; /* Анимации */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Тень для текста */
+  padding: 10px 20px; /* Отступы для текста */
+  border-radius: 10px; /* Скругленные углы */
+  display: inline-block; /* Чтобы градиент применялся к тексту */
 }
 
+/* Анимация для градиентного текста */
+@keyframes gradientText {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Анимация пульсации */
 @keyframes pulse {
   0% {
     transform: scale(1);

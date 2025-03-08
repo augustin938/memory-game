@@ -1,11 +1,14 @@
+/* app-module.css */
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  min-height: 100vh; /* Занимает всю высоту экрана */
+  width: 100%; /* Занимает всю ширину экрана */
   padding: 20px;
   text-align: center;
+  box-sizing: border-box; /* Учитывает padding в общей ширине и высоте */
 }
 
 .buttonContainer {
@@ -17,4 +20,10 @@
 
 .gameFinished {
   margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
+
