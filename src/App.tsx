@@ -1,19 +1,31 @@
 import { useState, useEffect } from "react";
 import Header from "./components/Header/Header";
 import GameBoard from "./components/GameBoard/GameBoard";
-import Timer from "./components/Timer/Timer";
-import Score from "./components/Score/Score";
-import Button from "./components/Button/Button";
 import GameModeSelector from "./components/GameModeSelector/GameModeSelector";
-import TimerTypeSelector from "./components/TimerTypeSelector/GameTypeSelector";
+import GameTypeSelector from "./components/GameTypeSelector/GameTypeSelector";
 import CardSetSelector from "./components/CardSetSelector/CardSetSelector";
+import GameControls from "./components/GameControls/GameControls";
+import GameStatus from "./components/GameStatus/GameStatus";
+import GameInfo from "./components/GameInfo/GameInfo";
 import styles from "./App.module.css";
 import { cardSets } from "./components/cardSets ";
+import Button from "./components/Button/Button";
+import PlayerStats from "./components/PlayerStats/PlayerStats";
 
 interface CardData {
   id: number;
   image: string;
   isFlipped: boolean;
+}
+
+interface GameStats {
+  mode: number;
+  type: GameType;
+  time: number;
+  moves: number;
+  rounds?: number;
+  date: string;
+  stopped?: boolean;
 }
 
 export type GameType = "normal" | "reverse" | "endless";
@@ -34,9 +46,12 @@ export default function App() {
   const [rounds, setRounds] = useState(0);
   const [isGamePaused, setIsGamePaused] = useState(false);
   const [cardSet, setCardSet] = useState<keyof typeof cardSets>("classic");
-  const [showTimeUpModal, setShowTimeUpModal] = useState(false); // Новое состояние для меню "Время вышло"
+  const [showTimeUpModal, setShowTimeUpModal] = useState(false);
+  const [playerName, setPlayerName] = useState<string>("");
+  const [showNameInput, setShowNameInput] = useState<boolean>(true);
+  const [gameStats, setGameStats] = useState<GameStats[]>([]);
+  const [showStats, setShowStats] = useState<boolean>(false);
 
-  // Генерация карточек
   const generateCards = (mode: number) => {
     const totalCards = mode * mode;
     const selectedImages = cardSets[cardSet].slice(0, totalCards / 2);
@@ -53,13 +68,51 @@ export default function App() {
     setCards(shuffledCards);
   };
 
-  // Обработчик выбора режима игры
+  const handleNameSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (playerName.trim()) {
+      setShowNameInput(false);
+      const savedStats = localStorage.getItem(`memoryGameStats_${playerName}`);
+      if (savedStats) {
+        setGameStats(JSON.parse(savedStats));
+      }
+    }
+  };
+
+  const addGameStats = (stats: Omit<GameStats, 'date'>) => {
+    const newStat = {
+      ...stats,
+      date: new Date().toLocaleString(),
+    };
+  
+    let updatedStats: GameStats[];
+    
+    if (stats.type === "endless") {
+      // Удаляем предыдущие записи бесконечного режима
+      updatedStats = [
+        ...gameStats.filter(s => s.type !== "endless"),
+        newStat
+      ];
+    } else {
+      updatedStats = [...gameStats, newStat];
+    }
+  
+    setGameStats(updatedStats);
+    localStorage.setItem(`memoryGameStats_${playerName}`, JSON.stringify(updatedStats));
+  };
+
+
   const handleModeSelect = (mode: number) => {
+    let timeForMode = 0;
+    if (mode === 2) timeForMode = 5;
+    else if (mode === 4) timeForMode = 60;
+    else if (mode === 6) timeForMode = 90;
+    
+    setInitialTime(timeForMode);
     setGameMode(mode);
     setShowTimerTypeSelector(true);
   };
 
-  // Обработчик выбора типа игры
   const handleGameTypeSelect = (type: GameType) => {
     setGameType(type);
     setShowTimerTypeSelector(false);
@@ -67,30 +120,17 @@ export default function App() {
     setIsGameStarted(false);
     setMoves(0);
     setTime(0);
-    setTimeLeft(initialTime);
+    setTimeLeft(type === "reverse" ? initialTime : 0);
     setShowCongratulations(false);
     setRounds(0);
     setIsGamePaused(false);
-    setShowTimeUpModal(false); // Сбрасываем состояние меню "Время вышло"
+    setShowTimeUpModal(false);
+    setIsClickable(true);
   };
 
-  // Обработчик остановки игры
-  const handleStopGame = () => {
-    setIsGameStarted(false);
-    setIsGamePaused(true);
-    setShowCongratulations(true);
-  };
-
-  // Обработчик продолжения игры
-  const handleContinueGame = () => {
-    setIsGameStarted(true);
-    setIsGamePaused(false);
-    setShowCongratulations(false);
-  };
-
-  // Обработчик клика по карточке
   const handleCardClick = (id: number) => {
-    if (!isClickable || cards.find((card) => card.id === id)?.isFlipped) return;
+    if (gameType === "reverse" && timeLeft <= 0) return;
+    if (!isClickable || cards.find((card) => card.id === id)?.isFlipped || isGamePaused) return;
 
     if (!isGameStarted) {
       setIsGameStarted(true);
@@ -117,7 +157,7 @@ export default function App() {
         setIsClickable(true);
 
         if (gameType === "reverse") {
-          setTimeLeft((prevTime) => prevTime + 5); // Увеличиваем время на 5 секунд
+          setTimeLeft((prevTime) => prevTime + 5);
         }
       } else {
         setTimeout(() => {
@@ -137,7 +177,6 @@ export default function App() {
     }
   };
 
-  // Обработчик выбора набора карточек
   const handleCardSetSelect = (set: keyof typeof cardSets) => {
     setCardSet(set);
     if (gameMode) {
@@ -145,7 +184,6 @@ export default function App() {
     }
   };
 
-  // Обработчик новой игры
   const handleNewGame = () => {
     if (gameMode) {
       generateCards(gameMode);
@@ -153,14 +191,59 @@ export default function App() {
     setSelectedCards([]);
     setMoves(0);
     setTime(0);
-    setTimeLeft(initialTime);
+    setTimeLeft(gameType === "reverse" ? initialTime : 0);
     setIsGameStarted(false);
     setShowCongratulations(false);
     setIsGamePaused(false);
-    setShowTimeUpModal(false); // Сбрасываем состояние меню "Время вышло"
+    setShowTimeUpModal(false);
+    setIsClickable(true);
+    
+    // Фиксируем текущую игру в статистике перед сбросом
+    if (gameType === "endless" && rounds > 0) {
+      addGameStats({
+        mode: gameMode!,
+        type: gameType,
+        time: time,
+        moves: moves,
+        rounds: rounds,
+        stopped: true
+      });
+    }
+    
+    // Сбрасываем раунды только после сохранения статистики
+    setRounds(0);
   };
 
-  // Обработчик возврата в главное меню
+  const handlePauseGame = () => {
+    if (isGamePaused) {
+      // Продолжаем игру
+      setIsGameStarted(true);
+      setIsGamePaused(false);
+    } else {
+      // Ставим на паузу
+      setIsGameStarted(false);
+      setIsGamePaused(true);
+      
+      // Убрали сохранение статистики здесь - это было причиной дублирования
+    }
+  };
+
+const handleEndGame = () => {
+  // Сохраняем только если игра действительно была играна
+  if (time > 0 || moves > 0 || rounds > 0) {
+    addGameStats({
+      mode: gameMode!,
+      type: "endless",
+      time: time,
+      moves: moves,
+      rounds: rounds,
+      stopped: true, // Важно: marked as stopped
+      date: new Date().toLocaleString()
+    });
+  }
+  handleReturnToMainMenu();
+};
+
   const handleReturnToMainMenu = () => {
     setGameMode(null);
     setCards([]);
@@ -171,138 +254,161 @@ export default function App() {
     setIsGameStarted(false);
     setShowCongratulations(false);
     setIsGamePaused(false);
-    setShowTimeUpModal(false); // Сбрасываем состояние меню "Время вышло"
+    setShowTimeUpModal(false);
   };
 
-  // Установка начального времени для таймера "наоборот"
-  useEffect(() => {
-    if (gameMode === 2) {
-      setInitialTime(5); // 2x2: 5 секунд
-    } else if (gameMode === 4) {
-      setInitialTime(60); // 4x4: 60 секунд
-    } else if (gameMode === 6) {
-      setInitialTime(90); // 6x6: 90 секунд
-    }
-  }, [gameMode]);
+ // Обновленный handleStopGame
 
-  // Управление таймером (обычный и обратный)
+  const handleContinueGame = () => {
+    setIsGameStarted(true);
+    setIsGamePaused(false);
+    setShowCongratulations(false);
+    setIsClickable(true);
+  };
+
   useEffect(() => {
     let interval: number | undefined;
 
-    if (isGameStarted) {
-      if (gameType === "normal") {
-        // Обычный таймер: увеличиваем время каждую секунду
-        interval = setInterval(() => {
-          setTime((prevTime) => prevTime + 1);
-        }, 1000);
-      } else if (gameType === "reverse") {
-        // Таймер наоборот: уменьшаем время каждую секунду
-        interval = setInterval(() => {
-          setTimeLeft((prevTime) => {
-            if (prevTime <= 0) {
-              clearInterval(interval);
-              setIsGameStarted(false);
-              setShowTimeUpModal(true); // Показываем меню "Время вышло"
-              return 0;
-            }
-            return prevTime - 1;
-          });
-        }, 1000);
-      }
+    const allCardsFlipped = cards.length > 0 && cards.every(card => card.isFlipped);
+  
+  if (isGameStarted && !isGamePaused && !allCardsFlipped) {
+    if (gameType === "normal" || gameType === "endless") {
+      interval = setInterval(() => {
+        setTime(prev => prev + 1);
+      }, 1000);
+    } else if (gameType === "reverse") {
+      interval = setInterval(() => {
+        setTimeLeft(prev => {
+          if (prev <= 0) {
+            clearInterval(interval);
+            setIsGameStarted(false);
+            setIsClickable(false);
+            setShowTimeUpModal(true);
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
     }
+  }
 
-    return () => clearInterval(interval); // Очистка интервала при размонтировании
-  }, [isGameStarted, gameType]);
+  return () => clearInterval(interval);
+}, [isGameStarted, isGamePaused, gameType, cards]);
 
-  // Запуск нового раунда или завершение игры
+
   useEffect(() => {
-    if (cards.length > 0 && cards.every((card) => card.isFlipped)) {
+    if (cards.length > 0 && cards.every(card => card.isFlipped)) {
       if (gameType === "endless") {
-        setRounds((prevRounds) => prevRounds + 1);
+        // Обновляем статистику после каждого раунда
+        addGameStats({
+          mode: gameMode!,
+          type: gameType,
+          time: time,
+          moves: moves,
+          rounds: rounds + 1,
+          stopped: false // Не остановлено - игра продолжается
+        });
+  
+        setRounds(prev => prev + 1);
         setTimeout(() => {
           generateCards(gameMode!);
           setSelectedCards([]);
           setMoves(0);
           setTime(0);
-          setTimeLeft(initialTime);
           setIsGameStarted(false);
           setShowCongratulations(false);
         }, 1000);
       } else {
+        // Обычный режим
+        addGameStats({
+          mode: gameMode!,
+          type: gameType,
+          time: gameType === "reverse" ? initialTime - timeLeft : time,
+          moves: moves,
+          stopped: false
+        });
         setIsGameStarted(false);
         setShowCongratulations(true);
       }
     }
   }, [cards, gameType, gameMode, initialTime]);
 
-  // Проверка завершения игры (все карточки перевернуты)
-  useEffect(() => {
-    if (cards.length > 0 && cards.every((card) => card.isFlipped)) {
-      console.log("Все карточки перевернуты!");
-      setIsGameStarted(false);
-      setShowCongratulations(true);
-    }
-  }, [cards]);
+  if (showNameInput) {
+    return (
+      <div className={styles.nameInputContainer}>
+        <h2>Введите ваш никнейм</h2>
+        <form onSubmit={handleNameSubmit}>
+          <input
+            type="text"
+            value={playerName}
+            onChange={(e) => setPlayerName(e.target.value)}
+            placeholder="Ваш никнейм"
+            className={styles.nameInput}
+            required
+          />
+          <Button>Начать игру</Button>
+        </form>
+      </div>
+    );
+  }
+  
 
   return (
     <div className={styles.container}>
-      <Header />
-      {!gameMode ? (
-        <>
-          <GameModeSelector onSelectMode={handleModeSelect} />
-          <CardSetSelector onSelectCardSet={handleCardSetSelect} />
-        </>
-      ) : showTimerTypeSelector ? (
-        <TimerTypeSelector onSelectGameType={handleGameTypeSelect} />
+      <div className={styles.headerWithStats}>
+        <Header />
+        <Button onClick={() => setShowStats(!showStats)}>
+          {showStats ? "Скрыть статистику" : "Показать статистику"}
+        </Button>
+      </div>
+      
+      {showStats ? (
+        <PlayerStats playerName={playerName} stats={gameStats} />
       ) : (
         <>
-          <Timer time={time} timeLeft={timeLeft} timerType={gameType} />
-          <Score moves={moves} />
-          {showCongratulations ? (
-            <div className={styles.gameFinished}>
-              {isGamePaused ? (
-                <h2>Игра остановлена</h2>
-              ) : gameType === "endless" ? (
-                <h2>Следующий раунд</h2>
-              ) : (
-                <h2>Поздравляем! Вы выиграли!</h2>
-              )}
-              <Button onClick={handleNewGame}>Новая игра</Button>
-              {isGamePaused && (
-                <Button onClick={handleContinueGame}>Продолжить игру</Button>
-              )}
-              <Button onClick={handleReturnToMainMenu}>
-                Выйти в главное меню
-              </Button>
-            </div>
-          ) : showTimeUpModal ? ( // Меню "Время вышло"
-            <div className={styles.gameFinished}>
-              <h2>Время вышло!</h2>
-              <Button onClick={handleNewGame}>Новая игра</Button>
-              <Button onClick={handleReturnToMainMenu}>
-                Выйти в главное меню
-              </Button>
-            </div>
+          {!gameMode ? (
+            <>
+              <GameModeSelector onSelectMode={handleModeSelect} />
+              <CardSetSelector onSelectCardSet={handleCardSetSelect} />
+            </>
+          ) : showTimerTypeSelector ? (
+            <GameTypeSelector 
+              onSelectGameType={handleGameTypeSelect} 
+              onReturnToMainMenu={handleReturnToMainMenu}
+            />
           ) : (
             <>
+              <GameInfo
+                time={time}
+                timeLeft={timeLeft}
+                timerType={gameType}
+                moves={moves}
+                rounds={rounds}
+              />
+              <GameStatus
+                rounds={rounds}
+                isGamePaused={isGamePaused}
+                gameType={gameType}
+                showCongratulations={showCongratulations}
+                showTimeUpModal={showTimeUpModal}
+                onContinueGame={handleContinueGame}
+                onNewGame={handleNewGame}
+                onReturnToMainMenu={handleReturnToMainMenu}
+              />
               <GameBoard
                 cards={cards}
                 onCardClick={handleCardClick}
                 mode={gameMode}
-                isClickable={isClickable}
+                isClickable={isClickable && !isGamePaused}
               />
-              {gameType === "endless" && (
-                <div className={styles.rounds}>Раундов завершено: {rounds}</div>
-              )}
-              <div className={styles.buttonContainer}>
-                <Button onClick={handleReturnToMainMenu}>
-                  Выйти в главное меню
-                </Button>
-                <Button onClick={handleNewGame}>Новая игра</Button>
-              </div>
-              {gameType === "endless" && (
-                <Button onClick={handleStopGame}>Остановить игру</Button>
-              )}
+              <GameControls
+                onNewGame={handleNewGame}
+                onReturnToMainMenu={handleReturnToMainMenu}
+                onPauseGame={handlePauseGame}
+                onEndGame={gameType === "endless" ? handleEndGame : undefined}
+                isGamePaused={isGamePaused}
+                gameType={gameType}
+              />
             </>
           )}
         </>

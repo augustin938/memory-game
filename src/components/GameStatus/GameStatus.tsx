@@ -1,0 +1,60 @@
+import Button from "../Button/Button";
+import styles from "./GameStatus.module.css";
+
+interface GameStatusProps {
+  isGamePaused: boolean;
+  gameType: "normal" | "reverse" | "endless";
+  showCongratulations: boolean;
+  showTimeUpModal: boolean;
+  rounds: number;
+  
+  onEndGame?: () => void;
+  onNewGame: () => void;
+  onReturnToMainMenu: () => void;
+  onContinueGame: () => void;
+}
+
+
+// Обновленный GameStatus.tsx
+// GameStatus.tsx
+export default function GameStatus({
+  isGamePaused,
+  gameType,
+  showCongratulations,
+  showTimeUpModal,
+  rounds,
+  onReturnToMainMenu,
+}: GameStatusProps) {
+  if (showCongratulations) {
+    return (
+      <div className={styles.gameFinished}>
+        {isGamePaused ? (
+          gameType === "endless" ? (
+            <>
+              <h2>Игра завершена! Раундов: {rounds}</h2>
+              <Button onClick={onReturnToMainMenu}>В главное меню</Button>
+            </>
+          ) : (
+            <h2>Игра на паузе</h2>
+          )
+        ) : gameType === "endless" ? (
+          <h2>Раунд {rounds} завершен!</h2>
+        ) : (
+          <h2>Поздравляем! Вы выиграли!</h2>
+        )}
+      </div>
+    );
+  }
+
+  
+
+  if (showTimeUpModal) {
+    return (
+      <div className={styles.gameFinished}>
+        <h2>Время вышло!</h2>
+      </div>
+    );
+  }
+
+  return null;
+}

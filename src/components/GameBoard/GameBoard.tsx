@@ -14,12 +14,7 @@ interface GameBoardProps {
   isClickable: boolean;
 }
 
-export default function GameBoard({
-  cards,
-  onCardClick,
-  mode,
-  isClickable,
-}: GameBoardProps) {
+export default function GameBoard({ cards, onCardClick, mode, isClickable }: GameBoardProps) {
   return (
     <div className={styles.gameBoard} data-mode={mode}>
       {cards.map((card) => (

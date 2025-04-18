@@ -1,0 +1,12 @@
+/* src/components/GameInfo/GameInfo.module.css */
+.gameInfo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .rounds {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }

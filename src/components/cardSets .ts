@@ -18,7 +18,6 @@ export const cardSets = {
       '/src/assets/images/animals/animal16.png',
       '/src/assets/images/animals/animal17.png',
       '/src/assets/images/animals/animal18.png',
-      
     ],
     
     emojis: [
@@ -41,7 +40,6 @@ export const cardSets = {
        '/src/assets/images/emojis/emoji17.png',
        '/src/assets/images/emojis/emoji18.png',
     ],
-
     classic: [
       '/src/assets/images/classic/card1.png',
       '/src/assets/images/classic/card2.png',
@@ -61,7 +59,6 @@ export const cardSets = {
       '/src/assets/images/classic/card15.png',
       '/src/assets/images/classic/card16.png',
       '/src/assets/images/classic/card17.png',
-      '/src/assets/images/classic/card18.png',
-      
+      '/src/assets/images/classic/card18.png',      
     ],
-  };
+};

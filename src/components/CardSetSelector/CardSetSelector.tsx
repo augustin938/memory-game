@@ -6,9 +6,7 @@ interface CardSetSelectorProps {
   onSelectCardSet: (set: keyof typeof cardSets) => void;
 }
 
-export default function CardSetSelector({
-  onSelectCardSet,
-}: CardSetSelectorProps) {
+export default function CardSetSelector({ onSelectCardSet }: CardSetSelectorProps) {
   return (
     <div className={styles.cardSetSelector}>
       <h2>Выберите набор карточек:</h2>

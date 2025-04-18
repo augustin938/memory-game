@@ -7,12 +7,7 @@ interface CardProps {
   isClickable: boolean;
 }
 
-export default function Card({
-  image,
-  isFlipped,
-  onClick,
-  isClickable,
-}: CardProps) {
+export default function Card({ image, isFlipped, onClick, isClickable }: CardProps) {
   return (
     <div
       className={`${styles.card} ${isFlipped ? styles.flipped : ""}`}
