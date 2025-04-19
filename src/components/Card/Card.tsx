@@ -12,11 +12,12 @@ export default function Card({ image, isFlipped, onClick, isClickable }: CardPro
     <div
       className={`${styles.card} ${isFlipped ? styles.flipped : ""}`}
       onClick={isClickable ? onClick : undefined}
+      data-testid="card"
     >
-      <div className={styles.front}>
+      <div className={styles.front} data-testid="card-front">
         <img src={image} alt="card" />
       </div>
-      <div className={styles.back}></div>
+      <div className={styles.back} data-testid="card-back"></div>
     </div>
   );
 }

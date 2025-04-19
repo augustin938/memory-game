@@ -1,5 +1,6 @@
 import styles from "./PlayerStats.module.css";
 
+
 interface GameStats {
   mode: number;
   type: string;

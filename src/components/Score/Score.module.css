@@ -1,27 +1,31 @@
 .score {
-  font-size: 1.5rem;
-  margin-bottom: 10px;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 700;
-  color: transparent;
-  background: linear-gradient(45deg, #8a2777, #e10750, #ffffff, #ffcc00);
-  background-clip: text;
-  -webkit-background-clip: text;
-  animation: gradientText 5s ease infinite;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-  padding: 10px 20px;
-  border-radius: 10px;
-  display: inline-block;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: white;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-@keyframes gradientText {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
+.scoreValue {
+  font-weight: 700;
+  color: #fbbf24;
+}
+
+.scoreIcon {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #fbbf24;
+}
+
+@media (max-width: 640px) {
+  .score {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
   }
 }

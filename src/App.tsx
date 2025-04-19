@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect} from "react";
 import Header from "./components/Header/Header";
 import GameBoard from "./components/GameBoard/GameBoard";
 import GameModeSelector from "./components/GameModeSelector/GameModeSelector";
@@ -8,6 +8,7 @@ import GameControls from "./components/GameControls/GameControls";
 import GameStatus from "./components/GameStatus/GameStatus";
 import GameInfo from "./components/GameInfo/GameInfo";
 import styles from "./App.module.css";
+
 import { cardSets } from "./components/cardSets ";
 import Button from "./components/Button/Button";
 import PlayerStats from "./components/PlayerStats/PlayerStats";
@@ -238,7 +239,7 @@ const handleEndGame = () => {
       moves: moves,
       rounds: rounds,
       stopped: true, // Важно: marked as stopped
-      date: new Date().toLocaleString()
+      //date: new Date().toLocaleString()
     });
   }
   handleReturnToMainMenu();
@@ -267,7 +268,7 @@ const handleEndGame = () => {
   };
 
   useEffect(() => {
-    let interval: number | undefined;
+    let interval: number | any
 
     const allCardsFlipped = cards.length > 0 && cards.every(card => card.isFlipped);
   
@@ -357,7 +358,10 @@ const handleEndGame = () => {
     <div className={styles.container}>
       <div className={styles.headerWithStats}>
         <Header />
-        <Button onClick={() => setShowStats(!showStats)}>
+      </div>
+      <div className={styles.statsButton}>
+    
+      <Button  onClick={() => setShowStats(!showStats)}>
           {showStats ? "Скрыть статистику" : "Показать статистику"}
         </Button>
       </div>
@@ -415,4 +419,5 @@ const handleEndGame = () => {
       )}
     </div>
   );
+
 }

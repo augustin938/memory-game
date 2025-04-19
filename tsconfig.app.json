@@ -22,5 +22,5 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src"]
+  "include": ["src", "e2e/gameModeSelector.spec.ts", "e2e/gamePlay.spec.ts"]
 }

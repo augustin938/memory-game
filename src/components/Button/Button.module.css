@@ -1,43 +1,165 @@
 .button {
-  padding: 12px 24px;
+  --primary-color: #6366f1;
+  --secondary-color: #4f46e5;
+  --hover-color: #4338ca;
+  --text-color: #ffffff;
+  
+  padding: 0.75rem 1.5rem;
   font-size: 1rem;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
   cursor: pointer;
-  background: linear-gradient(45deg, #007bff, #00a038);
-  color: white;
+  background-color: var(--primary-color);
+  color: var(--text-color);
   border: none;
-  border-radius: 8px;
-  transition: transform 0.2s, box-shadow 0.2s;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  margin: 5px;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  margin: 0.25rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
 }
 
 .button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
-  background: linear-gradient(45deg, #00a038, #007bff);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+  background-color: var(--hover-color);
+}
+
+.button:hover::before {
+  opacity: 1;
 }
 
 .button:active {
   transform: translateY(0);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
 }
 
-.gameFinished {
-  text-align: center;
-  margin-top: 20px;
-}
-
-.gameFinished h2 {
-  margin-bottom: 20px;
-  font-size: 2rem;
-  color: #ffffff;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+.button:focus-visible {
+  outline: 2px solid var(--secondary-color);
+  outline-offset: 2px;
 }
 
 .buttonContainer {
   display: flex;
-  gap: 10px;
+  gap: 1rem;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.gameFinished {
+  text-align: center;
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 0.75rem;
+  backdrop-filter: blur(10px);
+}
+
+.gameFinished h2 {
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+@media (max-width: 640px) {
+  .button {
+    padding: 0.625rem 1.25rem;
+    font-size: 0.875rem;
+  }
+  
+  .buttonContainer {
+    gap: 0.75rem;
+  }
+}
+
+.statsButton {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 100;
+  padding: 0.75rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  background-color: rgba(79, 70, 229, 0.9);
+  color: white;
+  border: none;
+  border-radius: 2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  backdrop-filter: blur(10px);
+}
+
+.statsButton:hover {
+  background-color: rgba(99, 102, 241, 0.9);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.statsButton:active {
+  transform: translateY(0);
+}
+
+.statsButton svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+@media (max-width: 768px) {
+  .statsButton {
+    bottom: 1rem;
+    right: 1rem;
+    padding: 0.625rem 1rem;
+    font-size: 0.8125rem;
+  }
+}
+
+.startButton {
+  margin-top: 1rem;
+}
+
+
+/* Кнопка статистики (фиксированная справа) */
+.statsButton {
+  position: fixed;
+  bottom: 5.5rem; /* Выше панели управления */
+  
+  right: 1rem;
+  z-index: 60;
+  padding: 0.65rem 1.25rem;
+  background: rgba(79, 70, 229, 0.85);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.statsButton:hover {
+  background: rgba(99, 102, 241, 0.9);
+  transform: translateY(-2px);
 }

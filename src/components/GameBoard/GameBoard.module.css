@@ -1,52 +1,60 @@
 .gameBoard {
   display: grid;
   justify-content: center;
-  margin: 20px auto;
-  padding: 20px;
-  border-radius: 15px;
-  background: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  margin: 2rem auto;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
   position: relative;
   overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
 
 .gameBoard::before {
   content: '';
   position: absolute;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
-  background: linear-gradient(45deg, #ff00cc, #3333ff, #00ffcc, #ffcc00);
-  background-size: 400% 400%;
-  border-radius: 15px;
+  inset: 0;
+  background: linear-gradient(
+    45deg,
+    rgba(99, 102, 241, 0.2),
+    rgba(167, 139, 250, 0.2),
+    rgba(244, 114, 182, 0.2),
+    rgba(251, 191, 36, 0.2)
+  );
   z-index: -1;
-  animation: gradientBorder 5s ease infinite;
-}
-
-@keyframes gradientBorder {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+  opacity: 0.5;
 }
 
 .gameBoard[data-mode="2"] {
-  grid-template-columns: repeat(2, 90px);
-  gap: 20px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
 }
 
 .gameBoard[data-mode="4"] {
-  grid-template-columns: repeat(4, 90px);
-  gap: 20px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.25rem;
 }
 
 .gameBoard[data-mode="6"] {
-  grid-template-columns: repeat(6, 90px);
-  gap: 15px;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+@media (max-width: 768px) {
+  .gameBoard[data-mode="6"] {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .gameBoard[data-mode="4"],
+  .gameBoard[data-mode="6"] {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  
+  .gameBoard {
+    padding: 1rem;
+  }
 }
