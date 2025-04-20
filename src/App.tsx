@@ -225,12 +225,10 @@ export default function App() {
       setIsGameStarted(false);
       setIsGamePaused(true);
       
-      // Убрали сохранение статистики здесь - это было причиной дублирования
     }
   };
 
 const handleEndGame = () => {
-  // Сохраняем только если игра действительно была играна
   if (time > 0 || moves > 0 || rounds > 0) {
     addGameStats({
       mode: gameMode!,
@@ -238,7 +236,7 @@ const handleEndGame = () => {
       time: time,
       moves: moves,
       rounds: rounds,
-      stopped: true, // Важно: marked as stopped
+      stopped: true, 
       //date: new Date().toLocaleString()
     });
   }
@@ -258,7 +256,6 @@ const handleEndGame = () => {
     setShowTimeUpModal(false);
   };
 
- // Обновленный handleStopGame
 
   const handleContinueGame = () => {
     setIsGameStarted(true);
@@ -300,14 +297,14 @@ const handleEndGame = () => {
   useEffect(() => {
     if (cards.length > 0 && cards.every(card => card.isFlipped)) {
       if (gameType === "endless") {
-        // Обновляем статистику после каждого раунда
+        
         addGameStats({
           mode: gameMode!,
           type: gameType,
           time: time,
           moves: moves,
           rounds: rounds + 1,
-          stopped: false // Не остановлено - игра продолжается
+          stopped: false 
         });
   
         setRounds(prev => prev + 1);
@@ -359,7 +356,7 @@ const handleEndGame = () => {
       <div className={styles.headerWithStats}>
         <Header />
       </div>
-      <div className={styles.statsButton}>
+      <div>
     
       <Button  onClick={() => setShowStats(!showStats)}>
           {showStats ? "Скрыть статистику" : "Показать статистику"}
