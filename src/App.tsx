@@ -34,20 +34,26 @@ export type GameType = "normal" | "reverse" | "endless";
 export default function App() {
   const [cards, setCards] = useState<CardData[]>([]);
   const [selectedCards, setSelectedCards] = useState<number[]>([]);
+  const [isClickable, setIsClickable] = useState(true);
+
   const [moves, setMoves] = useState(0);
+  const [rounds, setRounds] = useState(0);
   const [time, setTime] = useState(0);
   const [timeLeft, setTimeLeft] = useState(0);
+
   const [isGameStarted, setIsGameStarted] = useState(false);
-  const [showCongratulations, setShowCongratulations] = useState(false);
+  const [isGamePaused, setIsGamePaused] = useState(false);
+
+  const [showCongratulations, setShowCongratulations] = useState(false); //поздравление
+  const [showTimeUpModal, setShowTimeUpModal] = useState(false); //время вышло
+
   const [gameMode, setGameMode] = useState<number | null>(null);
   const [gameType, setGameType] = useState<GameType>("normal");
-  const [showTimerTypeSelector, setShowTimerTypeSelector] = useState(false);
-  const [initialTime, setInitialTime] = useState(0);
-  const [isClickable, setIsClickable] = useState(true);
-  const [rounds, setRounds] = useState(0);
-  const [isGamePaused, setIsGamePaused] = useState(false);
   const [cardSet, setCardSet] = useState<keyof typeof cardSets>("classic");
-  const [showTimeUpModal, setShowTimeUpModal] = useState(false);
+  const [initialTime, setInitialTime] = useState(0);
+
+  const [showTimerTypeSelector, setShowTimerTypeSelector] = useState(false); // выбор типа таймера
+
   const [playerName, setPlayerName] = useState<string>("");
   const [showNameInput, setShowNameInput] = useState<boolean>(true);
   const [gameStats, setGameStats] = useState<GameStats[]>([]);
