@@ -3,7 +3,6 @@ import Timer from "../Timer/Timer";
 import Score from "../Score/Score";
 import { GameType } from "../../App";
 
-
 interface GameInfoProps {
   time: number;
   timeLeft?: number;

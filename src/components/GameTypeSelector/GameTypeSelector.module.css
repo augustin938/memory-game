@@ -54,14 +54,3 @@
   height: 1.25rem;
 }
 
-@media (max-width: 640px) {
-  .typeButtons {
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .typeButton {
-    width: 100%;
-    justify-content: center;
-  }
-}

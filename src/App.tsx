@@ -89,7 +89,6 @@ export default function App() {
     let updatedStats: GameStats[];
     
     if (stats.type === "endless") {
-      // Удаляем предыдущие записи бесконечного режима
       updatedStats = [
         ...gameStats.filter(s => s.type !== "endless"),
         newStat
@@ -199,7 +198,6 @@ export default function App() {
     setShowTimeUpModal(false);
     setIsClickable(true);
     
-    // Фиксируем текущую игру в статистике перед сбросом
     if (gameType === "endless" && rounds > 0) {
       addGameStats({
         mode: gameMode!,
@@ -211,17 +209,16 @@ export default function App() {
       });
     }
     
-    // Сбрасываем раунды только после сохранения статистики
     setRounds(0);
   };
 
   const handlePauseGame = () => {
     if (isGamePaused) {
-      // Продолжаем игру
+      // продолжаем игру
       setIsGameStarted(true);
       setIsGamePaused(false);
     } else {
-      // Ставим на паузу
+      // ставим на паузу
       setIsGameStarted(false);
       setIsGamePaused(true);
       
@@ -334,13 +331,13 @@ const handleEndGame = () => {
   if (showNameInput) {
     return (
       <div className={styles.nameInputContainer}>
-        <h2>Введите ваш никнейм</h2>
+        <h2>Введите Ваше Имя</h2>
         <form onSubmit={handleNameSubmit}>
           <input
             type="text"
             value={playerName}
             onChange={(e) => setPlayerName(e.target.value)}
-            placeholder="Ваш никнейм"
+            placeholder="Ваше имя"
             className={styles.nameInput}
             required
           />

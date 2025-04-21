@@ -17,15 +17,11 @@ interface PlayerStatsProps {
 }
 
 export default function PlayerStats({ playerName, stats }: PlayerStatsProps) {
-  // Функция для получения лучших результатов (исключаем остановленные игры)
   const getBestResults = () => {
     const bestResults: Record<string, GameStats> = {};
   
     stats
       .filter(stat => {
-        // Включаем в лучшие:
-        // 1. Все обычные и reverse-игры (не бесконечные)
-        // 2. Бесконечные игры, которые были завершены (stopped: true)
         return stat.type !== "endless" || stat.stopped === true;
       })
       .forEach((stat) => {
@@ -38,7 +34,6 @@ export default function PlayerStats({ playerName, stats }: PlayerStatsProps) {
     return Object.values(bestResults);
   };
 
-  // 2. Для последних игр - все кроме активных бесконечных
   const getRecentGames = () => {
     return stats
       .filter(stat => stat.type !== "endless" || stat.stopped !== false)
@@ -49,10 +44,6 @@ export default function PlayerStats({ playerName, stats }: PlayerStatsProps) {
   const bestResults = getBestResults();
   const recentGames = getRecentGames();
 
-  // Фильтрация для последних игр:
-  // - Для бесконечного режима показываем только остановленные
-  // - Для других режимов показываем все завершенные игры
-// Фильтруем статистику для отображения
 
   return (
     <div className={styles.playerStats}>

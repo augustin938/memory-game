@@ -15,8 +15,6 @@ interface GameStatusProps {
 }
 
 
-// Обновленный GameStatus.tsx
-// GameStatus.tsx
 export default function GameStatus({
   isGamePaused,
   gameType,
@@ -46,7 +44,6 @@ export default function GameStatus({
     );
   }
 
-  
 
   if (showTimeUpModal) {
     return (
