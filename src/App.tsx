@@ -243,7 +243,9 @@ const handleEndGame = () => {
       //date: new Date().toLocaleString()
     });
   }
-  handleReturnToMainMenu();
+  // Показываем поздравления перед возвратом в меню
+  setShowCongratulations(true);
+  setIsGamePaused(true);
 };
 
   const handleReturnToMainMenu = () => {
@@ -337,13 +339,13 @@ const handleEndGame = () => {
   if (showNameInput) {
     return (
       <div className={styles.nameInputContainer}>
-        <h2>Введите Ваше Имя</h2>
+        <h2 className={styles['auto_h1']}>Авторизация</h2>
         <form onSubmit={handleNameSubmit}>
           <input
             type="text"
             value={playerName}
             onChange={(e) => setPlayerName(e.target.value)}
-            placeholder="Ваше имя"
+            placeholder="Введите Ваше имя"
             className={styles.nameInput}
             required
           />
@@ -359,7 +361,7 @@ const handleEndGame = () => {
       <div className={styles.headerWithStats}>
         <Header />
       </div>
-      <div>
+      <div className={styles.statsButton}>
     
       <Button  onClick={() => setShowStats(!showStats)}>
           {showStats ? "Скрыть статистику" : "Показать статистику"}

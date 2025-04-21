@@ -21,7 +21,6 @@ export default function GameStatus({
   showCongratulations,
   showTimeUpModal,
   rounds,
-  onReturnToMainMenu,
 }: GameStatusProps) {
   if (showCongratulations) {
     return (
@@ -30,7 +29,6 @@ export default function GameStatus({
           gameType === "endless" ? (
             <>
               <h2>Игра завершена! Раундов: {rounds}</h2>
-              <Button onClick={onReturnToMainMenu}>В главное меню</Button>
             </>
           ) : (
             <h2>Игра на паузе</h2>

@@ -23,7 +23,7 @@ export default function GameControls({
       <Button onClick={onReturnToMainMenu}>Главное меню</Button>
       <Button onClick={onNewGame}>Новая игра</Button>
       
-      {gameType === "reverse" || gameType =="normal" && (
+      {(gameType === "reverse" || gameType === "normal") && (
         <Button 
           onClick={onPauseGame}
         >

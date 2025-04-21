@@ -82,27 +82,42 @@
 
 .statsButton {
   position: fixed;
-  bottom: 6rem;
+  bottom: 40rem;
   right: 1.5rem;
   z-index: var(--z-stats-button);
   padding: 0.75rem 1.5rem;
-  background: rgba(79, 70, 229, 0.9);
   color: white;
   border: none;
-  border-radius: 2rem;
+  border-radius: 1rem;
   cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   font-size: 0.95rem;
   font-weight: 500;
   display: flex;
   align-items: center;
   gap: 0.5rem;
   transition: transform 0.2s, box-shadow 0.2s;
+  background-color: rgba(255, 255, 255, 0.05);
+
+
+  
 }
 
 .statsButton:hover {
-  background: rgba(99, 102, 241, 0.95);
   transform: translateY(-3px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+}
+
+.auto_h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+  width: 100%;
+  gap: 1.5rem;
+  margin-top: 1rem;
+  padding: 1.5rem;
+  max-width: 36rem;
+
+  border-radius: 1rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
 }
 
