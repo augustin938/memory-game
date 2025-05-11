@@ -10,7 +10,7 @@
 
   
   /* Light theme colors - muted and comfortable */
-  --color-bg: #a0b1b2cb;
+  --color-bg: #306568cb;
   --color-surface: #ffffff33;
   --color-text: #1e293b;
   --color-text-secondary: #64748b;
@@ -29,7 +29,7 @@ body {
   background: var(--color-bg);
   color: var(--color-text);
   background-image: 
-    radial-gradient(at 80% 0%, hsla(188, 31%, 85%, 0.482) 0px, transparent 50%),
+    radial-gradient(at 80% 0%, hsla(190, 8%, 15%, 0.482) 0px, transparent 50%),
     radial-gradient(at 0% 50%, hsla(355, 87%, 53%, 0.026) 0px, transparent 50%);
 }
 

@@ -23,11 +23,7 @@
   color: transparent;
   position: relative;
   color: #f3f3f3;
-  text-shadow:
-  -1px -1px 0 #000000,
-  1px -1px 0 #2d2e2e,
-  -1px 1px 0 #6a9b8d,
-  1px 1px 0 #40a67a;
+
   display: inline-block;
   
 }
