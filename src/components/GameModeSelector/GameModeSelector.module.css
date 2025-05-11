@@ -7,7 +7,12 @@
   padding: 1.5rem;
   max-width: 36rem;
   transition: transform 0.2s, box-shadow 0.2s;
-
+  color: white;
+  text-shadow:
+  -1px -1px 0 #000000,
+  1px -1px 0 #2d2e2e,
+  -1px 1px 0 #6a9b8d,
+  1px 1px 0 #40a67a;
   border-radius: 1rem;
   background-color: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);

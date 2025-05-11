@@ -10,7 +10,7 @@ interface GameTypeSelectorProps {
 export default function GameTypeSelector({ onSelectGameType, onReturnToMainMenu}: GameTypeSelectorProps) {
   return (
     <div className={styles.gameTypeSelector}>
-      <h2>Выберите тип игры:</h2>
+      <h2>Выберите тип игры</h2>
       <Button onClick={() => onSelectGameType("normal")}>Обычный</Button>
       <Button onClick={() => onSelectGameType("reverse")}>Таймер наоборот</Button>
       <Button onClick={() => onSelectGameType("endless")}>Бесконечная игра</Button>

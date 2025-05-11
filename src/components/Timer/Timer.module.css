@@ -10,6 +10,11 @@
   gap: 0.5rem;
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
+  text-shadow:
+  -1px -1px 0 #000000,
+  1px -1px 0 #2d2e2e,
+  -1px 1px 0 #6a9b8d,
+  1px 1px 0 #40a67a;
 }
 
 .timerValue {
@@ -25,38 +30,17 @@
 
 .infinity {
   font-size: 1.25rem;
-  font-weight: 700;
-  color: #a78bfa;
+  font-weight: 1700;
+  color: #e8e8e8;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
 }
 
 .infinityIcon {
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 2.5rem;
+  height: 2.5rem;
   color: #a78bfa;
   animation: pulse 2s infinite;
 }
 
-@keyframes pulse {
-  0%, 100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.7;
-    transform: scale(1.1);
-  }
-}
-
-@media (max-width: 640px) {
-  .timer {
-    font-size: 1rem;
-    padding: 0.5rem 1rem;
-  }
-  
-  .infinity {
-    font-size: 1.25rem;
-  }
-}

@@ -6,7 +6,7 @@ interface ScoreProps {
 
 export default function Score({ moves }: ScoreProps) {
   return (
-    <div className={styles.score}>
+    <div className={styles.score} data-testid="moves-counter">
       <span>Ходы: {moves}</span>
     </div>
   );

@@ -8,11 +8,11 @@ interface ButtonProps {
 
 export default function Button({ onClick, children }: ButtonProps) {
   return (
-    <button 
+      <button 
       className={styles.button} 
       onClick={onClick}
       data-testid="button"
-    >
+      >
       {children}
     </button>
   );

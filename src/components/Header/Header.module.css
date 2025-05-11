@@ -6,6 +6,8 @@
   position: relative;
   padding: 1.5rem 0;
   width: 100%;
+  color: #873f3f;
+  
 }
 
 .header h1 {
@@ -20,7 +22,14 @@
   background-clip: text;
   color: transparent;
   position: relative;
+  color: #f3f3f3;
+  text-shadow:
+  -1px -1px 0 #000000,
+  1px -1px 0 #2d2e2e,
+  -1px 1px 0 #6a9b8d,
+  1px 1px 0 #40a67a;
   display: inline-block;
+  
 }
 
 .header h1::after {
@@ -31,8 +40,9 @@
   transform: translateX(-50%);
   width: 50%;
   height: 4px;
-  background: linear-gradient(90deg, #6366f1, #8b5cf6);
+  background: linear-gradient(90deg, #489696, #89aa92);
   border-radius: 2px;
+  
 }
 
 .headerWithStats {
@@ -45,13 +55,3 @@
   padding: 0 1.5rem;
 }
 
-@media (max-width: 768px) {
-  .header h1 {
-    font-size: 2rem;
-  }
-  
-  .headerWithStats {
-    flex-direction: column;
-    gap: 1rem;
-  }
-}

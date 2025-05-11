@@ -1,54 +1,31 @@
 .gameControls {
   position: fixed;
   bottom: 0;
-  left: 0;
+  left: 1;
   right: 0;
   z-index: var(--z-game-controls);
   display: flex;
-  justify-content: center;
-  gap: 1rem;
-  padding: 1rem;
-  background: rgba(15, 23, 42, 0.95);
-  backdrop-filter: blur(12px);
-  border-top: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15);
-}
-
-.controlButton {
-  padding: 0.8rem 1.5rem;
-  font-size: 1rem;
-  font-weight: 500;
-  background: rgba(30, 41, 59, 0.8);
-  color: #e2e8f0;
-  border: 1px solid rgba(74, 85, 104, 0.6);
-  border-radius: 0.5rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  min-width: 120px;
   text-align: center;
+  margin-top: 0.5rem;
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  justify-content: center;
+  gap: 0rem;
+  transform: translateZ(0);
+  will-change: transform;
 }
 
-.controlButton:hover {
-  background: rgba(45, 55, 72, 0.9);
-  transform: translateY(-2px);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-}
-
-.controlButton:active {
-  transform: translateY(0);
-}
-
-@media (max-width: 768px) {
-  .gameControls {
-    flex-wrap: wrap;
-    padding: 0.8rem;
-    gap: 0.8rem;
-  }
-  
-  .controlButton {
-    padding: 0.7rem;
-    font-size: 0.9rem;
-    min-width: 100px;
-    flex: 1 1 120px;
-  }
-}
+/* .gameFinished {
+  text-align: center;
+  margin-top: 0.5rem;
+  padding: 1.5rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  backdrop-filter: blur(10px);
+  max-width: 27rem;
+  width: 100%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+} */

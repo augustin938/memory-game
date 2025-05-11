@@ -1,4 +1,3 @@
-import Button from "../Button/Button";
 import styles from "./GameStatus.module.css";
 
 interface GameStatusProps {
@@ -11,7 +10,6 @@ interface GameStatusProps {
   onEndGame?: () => void;
   onNewGame: () => void;
   onReturnToMainMenu: () => void;
-  onContinueGame: () => void;
 }
 
 
@@ -24,7 +22,7 @@ export default function GameStatus({
 }: GameStatusProps) {
   if (showCongratulations) {
     return (
-      <div className={styles.gameFinished}>
+      <div className={styles.gameFinished} data-testid="game-status">
         {isGamePaused ? (
           gameType === "endless" ? (
             <>
@@ -34,6 +32,7 @@ export default function GameStatus({
             <h2>Игра на паузе</h2>
           )
         ) : gameType === "endless" ? (
+          
           <h2>Раунд {rounds} завершен!</h2>
         ) : (
           <h2>Поздравляем! Вы выиграли!</h2>

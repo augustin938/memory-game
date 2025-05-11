@@ -84,8 +84,3 @@
   animation: celebrate 0.5s ease-in-out;
 }
 
-@media (min-width: 768px) {
-  .card {
-    --card-size: 6.5rem;
-  }
-}

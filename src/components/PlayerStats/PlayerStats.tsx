@@ -1,6 +1,5 @@
 import styles from "./PlayerStats.module.css";
 
-
 interface GameStats {
   mode: number;
   type: string;
@@ -46,11 +45,13 @@ export default function PlayerStats({ playerName, stats }: PlayerStatsProps) {
 
 
   return (
+    
     <div className={styles.playerStats}>
+      
       <h2>Статистика игрока: {playerName}</h2>
       
       <div className={styles.statsSection}>
-        <h3>Последние игры:</h3>
+        <h3>Последние игры</h3>
         <div className={styles.statsTable}>
           <div className={styles.tableHeader}>
             <span>Режим</span>
@@ -67,9 +68,9 @@ export default function PlayerStats({ playerName, stats }: PlayerStatsProps) {
                   {stat.type === "normal" ? "Обычный" : 
                    stat.type === "reverse" ? "Таймер наоборот" : "Бесконечный"}
                 </span>
-                <span>{stat.time} сек</span>
-                <span>{stat.moves}</span>
-                <span>{stat.rounds || "-"}</span>
+                <span>{stat.time || "--"} сек</span>
+              <span>{stat.moves || "--"}</span>
+              <span>{stat.rounds || "--"}</span>
                 <span>{stat.date}</span>
               </div>
             ))}
@@ -77,7 +78,7 @@ export default function PlayerStats({ playerName, stats }: PlayerStatsProps) {
       </div>
 
       <div className={styles.statsSection}>
-        <h3>Лучшие результаты:</h3>
+        <h3>Лучшие результаты</h3>
         <div className={styles.statsTable}>
           <div className={styles.tableHeader}>
             <span>Режим</span>
@@ -85,6 +86,7 @@ export default function PlayerStats({ playerName, stats }: PlayerStatsProps) {
             <span>Лучшее время</span>
             <span>Ходы</span>
             <span>Раунды</span>
+            <span>Дата</span>
           </div>
           {bestResults.map((stat, index) => (
             <div key={index} className={styles.tableRow}>
@@ -93,10 +95,10 @@ export default function PlayerStats({ playerName, stats }: PlayerStatsProps) {
                 {stat.type === "normal" ? "Обычный" : 
                  stat.type === "reverse" ? "Таймер наоборот" : "Бесконечный"}
               </span>
-              <span>{stat.time} сек</span>
-              
-              <span>{stat.moves}</span>
-              <span>{stat.rounds || "-"}</span>
+              <span>{stat.time || "--"} сек</span>
+              <span>{stat.moves || "--"}</span>
+              <span>{stat.rounds || "--"}</span>
+              <span>{stat.date}</span>
             </div>
           ))}
         </div>

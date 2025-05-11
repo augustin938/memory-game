@@ -1,8 +1,9 @@
 .button {
-  --primary-color: #6366f1;
-  --secondary-color: #4f46e5;
-  --hover-color: #4338ca;
+  --primary-color: #73807485;
+  --secondary-color: #6d9189d5;
+  --hover-color: #81afa9f3;
   --text-color: #ffffff;
+  --text-outline: 1px rgba(0, 0, 0, 0.5); /* Добавляем переменную для обводки */
   
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
@@ -18,8 +19,29 @@
   margin: 0.25rem;
   position: relative;
   overflow: hidden;
+  
+  /* Обводка текста */
+  text-shadow:
+    -1px -1px 0 #000000,
+    1px -1px 0 #2d2e2e,
+    -1px 1px 0 #6a9b8d,
+    1px 1px 0 #40a67a;
 }
 
+/* Для элементов с классом gameFinished */
+.gameFinished h2 {
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #ffffff;
+  text-shadow:
+  -1px -1px 0 #000000,
+  1px -1px 0 #2d2e2e,
+  -1px 1px 0 #6a9b8d,
+  1px 1px 0 #40a67a;
+}
+
+/* Остальные стили остаются без изменений */
 .button::before {
   content: '';
   position: absolute;
@@ -70,96 +92,6 @@
   backdrop-filter: blur(10px);
 }
 
-.gameFinished h2 {
-  margin-bottom: 1.5rem;
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #ffffff;
-}
-
-@media (max-width: 640px) {
-  .button {
-    padding: 0.625rem 1.25rem;
-    font-size: 0.875rem;
-  }
-  
-  .buttonContainer {
-    gap: 0.75rem;
-  }
-}
-
-.statsButton {
-  position: fixed;
-  bottom: 1.5rem;
-  right: 1.5rem;
-  z-index: 100;
-  padding: 0.75rem 1.25rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  background-color: rgba(79, 70, 229, 0.9);
-  color: white;
-  border: none;
-  border-radius: 2rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  backdrop-filter: blur(10px);
-}
-
-.statsButton:hover {
-  background-color: rgba(99, 102, 241, 0.9);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-}
-
-.statsButton:active {
-  transform: translateY(0);
-}
-
-.statsButton svg {
-  width: 1.25rem;
-  height: 1.25rem;
-}
-
-@media (max-width: 768px) {
-  .statsButton {
-    bottom: 1rem;
-    right: 1rem;
-    padding: 0.625rem 1rem;
-    font-size: 0.8125rem;
-  }
-}
-
 .startButton {
   margin-top: 1rem;
-}
-
-
-/* Кнопка статистики (фиксированная справа) */
-.statsButton {
-  position: fixed;
-  bottom: 5.5rem; /* Выше панели управления */
-  
-  right: 1rem;
-  z-index: 60;
-  padding: 0.65rem 1.25rem;
-  background: rgba(79, 70, 229, 0.85);
-  color: white;
-  border: none;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-  font-size: 0.9rem;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.statsButton:hover {
-  background: rgba(99, 102, 241, 0.9);
-  transform: translateY(-2px);
 }

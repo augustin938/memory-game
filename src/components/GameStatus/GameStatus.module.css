@@ -1,60 +1,28 @@
 .gameFinished {
   text-align: center;
-  margin-top: 2rem;
+  margin-top: 0.5rem;
   padding: 1.5rem;
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 1rem;
   backdrop-filter: blur(10px);
-  max-width: 32rem;
+  max-width: 27rem;
   width: 100%;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-shadow:
+  -1px -1px 0 #000000,
+  1px -1px 0 #2d2e2e,
+  -1px 1px 0 #6a9b8d,
+  1px 1px 0 #40a67a;
 }
 
 .gameFinished h2 {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   font-size: 1.5rem;
   font-weight: 600;
   color: #ffffff;
-}
-
-.statsGrid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-}
-
-.statItem {
-  background-color: rgba(255, 255, 255, 0.05);
-  padding: 0.75rem;
-  border-radius: 0.5rem;
-}
-
-.statLabel {
-  font-size: 0.875rem;
-  color: rgba(255, 255, 255, 0.7);
-  margin-bottom: 0.25rem;
-}
-
-.statValue {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: white;
-}
-
-.actionButtons {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  margin-top: 1.5rem;
-}
-
-@media (max-width: 640px) {
-  .statsGrid {
-    grid-template-columns: 1fr;
-  }
-  
-  .actionButtons {
-    flex-direction: column;
-  }
+  text-shadow:
+  -1px -1px 0 #000000,
+  1px -1px 0 #2d2e2e,
+  -1px 1px 0 #6a9b8d,
+  1px 1px 0 #40a67a;
 }

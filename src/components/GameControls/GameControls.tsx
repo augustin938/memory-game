@@ -19,7 +19,7 @@ export default function GameControls({
   gameType,
 }: GameControlsProps) {
   return (
-    <div className={styles.buttonContainer}>
+    <div className={styles.gameControls}>
       <Button onClick={onReturnToMainMenu}>Главное меню</Button>
       <Button onClick={onNewGame}>Новая игра</Button>
       

@@ -18,9 +18,9 @@
   inset: 0;
   background: linear-gradient(
     45deg,
-    rgba(99, 102, 241, 0.2),
-    rgba(167, 139, 250, 0.2),
-    rgba(244, 114, 182, 0.2),
+    rgba(141, 142, 165, 0.2),
+    rgba(163, 157, 183, 0.2),
+    rgba(160, 133, 147, 0.2),
     rgba(251, 191, 36, 0.2)
   );
   z-index: -1;
@@ -42,19 +42,3 @@
   gap: 1rem;
 }
 
-@media (max-width: 768px) {
-  .gameBoard[data-mode="6"] {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 640px) {
-  .gameBoard[data-mode="4"],
-  .gameBoard[data-mode="6"] {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-  
-  .gameBoard {
-    padding: 1rem;
-  }
-}

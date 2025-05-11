@@ -9,7 +9,7 @@ interface TimerProps {
 
 export default function Timer({ time, timeLeft, timerType }: TimerProps) {
   return (
-    <div className={styles.timer}>
+    <div className={styles.timer} data-testid="timer">
       {timerType === "normal" ? (
         `Время: ${time} сек.`
       ) : timerType === "reverse" ? (

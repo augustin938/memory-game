@@ -7,6 +7,7 @@
   width: 100%;
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
+
 }
 
 .playerStats h2 {
@@ -28,6 +29,7 @@
   margin-bottom: 1rem;
   font-size: 1.25rem;
   font-weight: 500;
+  
 }
 
 .statsTable {
@@ -52,7 +54,7 @@
 }
 
 .tableRow {
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: rgba(224, 213, 213, 0.05);
   border-radius: 0.5rem;
   color: rgba(255, 255, 255, 0.9);
   transition: background-color 0.2s ease;
@@ -66,26 +68,3 @@
   font-weight: 500;
 }
 
-@media (max-width: 768px) {
-  .tableHeader, .tableRow {
-    grid-template-columns: 2fr 1fr 1fr;
-  }
-  
-  .tableHeader span:nth-child(4),
-  .tableHeader span:nth-child(5),
-  .tableRow span:nth-child(4),
-  .tableRow span:nth-child(5) {
-    display: none;
-  }
-}
-
-@media (max-width: 480px) {
-  .tableHeader, .tableRow {
-    grid-template-columns: 2fr 1fr;
-  }
-  
-  .tableHeader span:nth-child(3),
-  .tableRow span:nth-child(3) {
-    display: none;
-  }
-}

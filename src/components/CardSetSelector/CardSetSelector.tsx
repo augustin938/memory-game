@@ -9,10 +9,17 @@ interface CardSetSelectorProps {
 export default function CardSetSelector({ onSelectCardSet }: CardSetSelectorProps) {
   return (
     <div className={styles.cardSetSelector}>
-      <h2>Выберите набор карточек:</h2>
-      <Button onClick={() => onSelectCardSet("animals")}>Животные</Button>
-      <Button onClick={() => onSelectCardSet("emojis")}>Смайлики</Button>
-      <Button onClick={() => onSelectCardSet("classic")}>Классические</Button>
-    </div>
+      <h2>Выберите оформление карточек</h2>
+        {Object.keys(cardSets).map((set) => (
+          <Button 
+            key={set}
+            onClick={() => onSelectCardSet(set as keyof typeof cardSets)}
+          >
+            {set === 'classic' && 'Классические'}
+            {set === 'animals' && 'Животные'}
+            {set === 'emojis' && 'Смайлики'}
+          </Button>
+        ))}
+      </div>
   );
 }

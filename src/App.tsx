@@ -8,7 +8,6 @@ import GameControls from "./components/GameControls/GameControls";
 import GameStatus from "./components/GameStatus/GameStatus";
 import GameInfo from "./components/GameInfo/GameInfo";
 import styles from "./App.module.css";
-
 import { cardSets } from "./components/cardSets ";
 import Button from "./components/Button/Button";
 import PlayerStats from "./components/PlayerStats/PlayerStats";
@@ -43,7 +42,6 @@ export default function App() {
 
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [isGamePaused, setIsGamePaused] = useState(false);
-
   const [showCongratulations, setShowCongratulations] = useState(false); //поздравление
   const [showTimeUpModal, setShowTimeUpModal] = useState(false); //время вышло
 
@@ -51,7 +49,6 @@ export default function App() {
   const [gameType, setGameType] = useState<GameType>("normal");
   const [cardSet, setCardSet] = useState<keyof typeof cardSets>("classic");
   const [initialTime, setInitialTime] = useState(0);
-
   const [showTimerTypeSelector, setShowTimerTypeSelector] = useState(false); // выбор типа таймера
 
   const [playerName, setPlayerName] = useState<string>("");
@@ -218,17 +215,19 @@ export default function App() {
     setRounds(0);
   };
 
-  const handlePauseGame = () => {
+  const handlePauseContinueGame = () => {
     if (isGamePaused) {
       // продолжаем игру
       setIsGameStarted(true);
       setIsGamePaused(false);
+      setShowCongratulations(false);
+      setIsClickable(true);
     } else {
       // ставим на паузу
       setIsGameStarted(false);
       setIsGamePaused(true);
-      
-    }
+      setShowCongratulations(true);
+      }
   };
 
 const handleEndGame = () => {
@@ -261,13 +260,19 @@ const handleEndGame = () => {
     setShowTimeUpModal(false);
   };
 
-
-  const handleContinueGame = () => {
-    setIsGameStarted(true);
-    setIsGamePaused(false);
-    setShowCongratulations(false);
-    setIsClickable(true);
+  const handleLogout = () => {
+    setPlayerName('');
+    setShowNameInput(true);
+    
+    localStorage.removeItem(`memoryGameStats_${playerName}`);
+    
+    setCards([]);
+    setMoves(0);
+    setTime(0);
+    setGameMode(null);
   };
+
+
 
   useEffect(() => {
     let interval: number | any
@@ -313,6 +318,7 @@ const handleEndGame = () => {
         });
   
         setRounds(prev => prev + 1);
+        setShowCongratulations(true);
         setTimeout(() => {
           generateCards(gameMode!);
           setSelectedCards([]);
@@ -320,7 +326,7 @@ const handleEndGame = () => {
           setTime(0);
           setIsGameStarted(false);
           setShowCongratulations(false);
-        }, 1000);
+        }, 2000);
       } else {
         // Обычный режим
         addGameStats({
@@ -358,11 +364,18 @@ const handleEndGame = () => {
 
   return (
     <div className={styles.container}>
+      
       <div className={styles.headerWithStats}>
         <Header />
       </div>
+
+      <div className={styles.logoutButton}>
+          <Button onClick={handleLogout}>
+           <img src="exit.png" alt="exit" width={20} height={20} />
+        </Button>
+      </div>
       <div className={styles.statsButton}>
-    
+
       <Button  onClick={() => setShowStats(!showStats)}>
           {showStats ? "Скрыть статистику" : "Показать статистику"}
         </Button>
@@ -397,7 +410,6 @@ const handleEndGame = () => {
                 gameType={gameType}
                 showCongratulations={showCongratulations}
                 showTimeUpModal={showTimeUpModal}
-                onContinueGame={handleContinueGame}
                 onNewGame={handleNewGame}
                 onReturnToMainMenu={handleReturnToMainMenu}
               />
@@ -410,7 +422,7 @@ const handleEndGame = () => {
               <GameControls
                 onNewGame={handleNewGame}
                 onReturnToMainMenu={handleReturnToMainMenu}
-                onPauseGame={handlePauseGame}
+                onPauseGame={handlePauseContinueGame}
                 onEndGame={gameType === "endless" ? handleEndGame : undefined}
                 isGamePaused={isGamePaused}
                 gameType={gameType}

@@ -4,9 +4,25 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 20px;
+      text-shadow:
+      -1px -1px 0 #000000,
+      1px -1px 0 #2d2e2e,
+      -1px 1px 0 #6a9b8d,
+      1px 1px 0 #40a67a;
     }
     
     .rounds {
       font-size: 1.2rem;
       font-weight: bold;
+      background-color: rgba(255, 255, 255, 0.1);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: white;
+      padding: 0.75rem 1.25rem;
+      border-radius: 0.5rem;
     }

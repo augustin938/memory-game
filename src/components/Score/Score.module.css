@@ -10,6 +10,12 @@
   gap: 0.5rem;
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
+
+  text-shadow:
+  -1px -1px 0 #000000,
+  1px -1px 0 #2d2e2e,
+  -1px 1px 0 #6a9b8d,
+  1px 1px 0 #40a67a;
 }
 
 .scoreValue {
@@ -21,4 +27,5 @@
   width: 1.25rem;
   height: 111.25rem;
   color: #fbbf24;
+  
 }
