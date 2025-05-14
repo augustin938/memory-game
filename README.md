@@ -111,7 +111,7 @@ npm test
 
 - Ежедневные задания
 
+# _______________
 
-
-## Автор: Augustin938 
-## GitHub: [\[ссылка на репозиторий\]](https://github.com/augustin938/memory-game)
+#### Автор: Augustin938 
+#### GitHub: [\[ссылка на репозиторий\]](https://github.com/augustin938/memory-game)
