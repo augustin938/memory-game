@@ -8,7 +8,6 @@ export interface CardData {
   isFlipped: boolean;
 }
 
-
 export interface GameStats {
   mode: number;
   type: GameType;
