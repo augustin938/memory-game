@@ -33,7 +33,9 @@ export default function GameStatus({
           )
         ) : gameType === "endless" ? (
           
-          <h2>Раунд {rounds} завершен!</h2>
+          <div className={styles.gameFinished} data-testid="game-status">
+            <h2>Раунд {rounds} завершен!</h2>
+          </div>
         ) : (
           <h2>Поздравляем! Вы выиграли!</h2>
         )}
