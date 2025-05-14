@@ -1,18 +1,7 @@
+import { GameBoardProps } from "../../types/types";
 import Card from "../Card/Card";
 import styles from "./GameBoard.module.css";
 
-interface CardData {
-  id: number;
-  image: string;
-  isFlipped: boolean;
-}
-
-interface GameBoardProps {
-  cards: CardData[];
-  onCardClick: (id: number) => void;
-  mode: number;
-  isClickable: boolean;
-}
 
 export default function GameBoard({ cards, onCardClick, mode, isClickable }: GameBoardProps) {
   return (

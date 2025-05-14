@@ -1,15 +1,8 @@
 import styles from "./GameInfo.module.css";
 import Timer from "../Timer/Timer";
 import Score from "../Score/Score";
-import { GameType } from "../../App";
+import { GameInfoProps } from "../../types/types";
 
-interface GameInfoProps {
-  time: number;
-  timeLeft?: number;
-  timerType: GameType;
-  moves: number;
-  rounds: number;
-}
 
 export default function GameInfo({
   time,

@@ -1,4 +1,5 @@
 import { useState, useEffect} from "react";
+import styles from "./App.module.css";
 import Header from "./components/Header/Header";
 import GameBoard from "./components/GameBoard/GameBoard";
 import GameModeSelector from "./components/GameModeSelector/GameModeSelector";
@@ -7,28 +8,10 @@ import CardSetSelector from "./components/CardSetSelector/CardSetSelector";
 import GameControls from "./components/GameControls/GameControls";
 import GameStatus from "./components/GameStatus/GameStatus";
 import GameInfo from "./components/GameInfo/GameInfo";
-import styles from "./App.module.css";
-import { cardSets } from "./components/cardSets ";
 import Button from "./components/Button/Button";
 import PlayerStats from "./components/PlayerStats/PlayerStats";
-
-interface CardData {
-  id: number;
-  image: string;
-  isFlipped: boolean;
-}
-
-interface GameStats {
-  mode: number;
-  type: GameType;
-  time: number;
-  moves: number;
-  rounds?: number;
-  date: string;
-  stopped?: boolean;
-}
-
-export type GameType = "normal" | "reverse" | "endless";
+import { cardSets } from "./components/cardSets ";
+import { CardData, GameType, GameStats } from "./types/types";
 
 export default function App() {
   const [cards, setCards] = useState<CardData[]>([]);

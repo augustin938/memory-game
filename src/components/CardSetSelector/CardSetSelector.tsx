@@ -1,10 +1,7 @@
 import { cardSets } from "../cardSets ";
 import Button from "../Button/Button";
 import styles from "./CardSetSelector.module.css";
-
-interface CardSetSelectorProps {
-  onSelectCardSet: (set: keyof typeof cardSets) => void;
-}
+import { CardSetSelectorProps } from "../../types/types";
 
 export default function CardSetSelector({ onSelectCardSet }: CardSetSelectorProps) {
   return (

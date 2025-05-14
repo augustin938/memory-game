@@ -1,9 +1,6 @@
 import styles from "./GameModeSelector.module.css";
 import Button from "../Button/Button";
-
-interface GameModeSelectorProps {
-  onSelectMode: (mode: number) => void;
-}
+import { GameModeSelectorProps } from "../../types/types";
 
 export default function GameModeSelector({ onSelectMode }: GameModeSelectorProps) {
   return (

@@ -1,16 +1,5 @@
+import { GameStatusProps } from "../../types/types";
 import styles from "./GameStatus.module.css";
-
-interface GameStatusProps {
-  isGamePaused: boolean;
-  gameType: "normal" | "reverse" | "endless";
-  showCongratulations: boolean;
-  showTimeUpModal: boolean;
-  rounds: number;
-  
-  onEndGame?: () => void;
-  onNewGame: () => void;
-  onReturnToMainMenu: () => void;
-}
 
 
 export default function GameStatus({

@@ -1,8 +1,5 @@
+import { ScoreProps } from "../../types/types";
 import styles from "./Score.module.css";
-
-interface ScoreProps {
-  moves: number;
-}
 
 export default function Score({ moves }: ScoreProps) {
   return (

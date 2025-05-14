@@ -1,14 +1,6 @@
+import { GameControlsProps } from "../../types/types";
 import Button from "../Button/Button";
 import styles from "./GameControls.module.css";
-
-interface GameControlsProps {
-  onNewGame: () => void;
-  onReturnToMainMenu: () => void;
-  onPauseGame: () => void;
-  onEndGame?: () => void;
-  isGamePaused: boolean;
-  gameType: "normal" | "reverse" | "endless";
-}
 
 export default function GameControls({
   onNewGame,

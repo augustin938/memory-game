@@ -1,11 +1,6 @@
 import styles from "./GameTypeSelector.module.css";
-import { GameType } from "../../App";
 import Button from "../Button/Button";
-
-interface GameTypeSelectorProps {
-  onReturnToMainMenu: () => void;
-  onSelectGameType: (type: GameType) => void;
-}
+import { GameTypeSelectorProps } from "../../types/types";
 
 export default function GameTypeSelector({ onSelectGameType, onReturnToMainMenu}: GameTypeSelectorProps) {
   return (

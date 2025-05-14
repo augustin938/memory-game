@@ -1,11 +1,7 @@
 import styles from "./Timer.module.css";
-import { GameType } from "../../App";
+import { TimerProps } from "../../types/types";
 
-interface TimerProps {
-  time: number; // Для обычного таймера
-  timeLeft?: number; // Для таймера "наоборот"
-  timerType: GameType;
-}
+
 
 export default function Timer({ time, timeLeft, timerType }: TimerProps) {
   return (
