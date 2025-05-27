@@ -55,39 +55,20 @@ export default function App() {
     setCards(shuffledCards);
   };
 
-  const handleNameSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (playerName.trim()) {
-      setShowNameInput(false);
-      const savedStats = localStorage.getItem(`memoryGameStats_${playerName}`);
-      if (savedStats) {
-        setGameStats(JSON.parse(savedStats));
-      }
-    }
-  };
-
-  const addGameStats = (stats: Omit<GameStats, 'date'>) => {
-    const newStat = {
-      ...stats,
-      date: new Date().toLocaleString(),
-    };
+const handleNameSubmit = (e: React.FormEvent) => {
+  e.preventDefault();
+  const name = playerName.trim();
   
-    let updatedStats: GameStats[];
+  if (name) {
+    setPlayerName(name);
+    setShowNameInput(false);
     
-    if (stats.type === "endless") {
-      updatedStats = [
-        ...gameStats.filter(s => s.type !== "endless"),
-        newStat
-      ];
-    } else {
-      updatedStats = [...gameStats, newStat];
-    }
-  
-    setGameStats(updatedStats);
-    localStorage.setItem(`memoryGameStats_${playerName}`, JSON.stringify(updatedStats));
-  };
-
-
+    const savedStats = localStorage.getItem(`memoryGameStats_${name}`);
+    setGameStats(savedStats ? JSON.parse(savedStats) : []);
+  }
+};
+    
+               
   const handleModeSelect = (mode: number) => {
     let timeForMode = 0;
     if (mode === 2) timeForMode = 5;
@@ -113,56 +94,87 @@ export default function App() {
     setShowTimeUpModal(false);
     setIsClickable(true);
   };
-
-  const handleCardClick = (id: number) => {
-    if (gameType === "reverse" && timeLeft <= 0) return;
-    if (!isClickable || cards.find((card) => card.id === id)?.isFlipped || isGamePaused) return;
-
-    if (!isGameStarted) {
-      setIsGameStarted(true);
-    }
-
-    setIsClickable(false);
-
-    setCards((prevCards) =>
-      prevCards.map((card) =>
-        card.id === id ? { ...card, isFlipped: true } : card
-      )
-    );
-
-    setSelectedCards((prevSelected) => [...prevSelected, id]);
-
-    if (selectedCards.length === 1) {
-      setMoves((prevMoves) => prevMoves + 1);
-      const [firstCardId] = selectedCards;
-      const firstCard = cards.find((card) => card.id === firstCardId);
-      const secondCard = cards.find((card) => card.id === id);
-
-      if (firstCard?.image === secondCard?.image) {
-        setSelectedCards([]);
-        setIsClickable(true);
-
-        if (gameType === "reverse") {
-          setTimeLeft((prevTime) => prevTime + 5);
-        }
-      } else {
-        setTimeout(() => {
-          setCards((prevCards) =>
-            prevCards.map((card) =>
-              card.id === firstCardId || card.id === id
-                ? { ...card, isFlipped: false }
-                : card
-            )
-          );
-          setSelectedCards([]);
-          setIsClickable(true);
-        }, 1000);
-      }
-    } else {
-      setIsClickable(true);
-    }
+const addGameStats = (stats: Omit<GameStats, 'date'>) => {
+  const newStat = {
+    ...stats,
+    date: new Date().toLocaleString(),
   };
 
+  const savedStats = localStorage.getItem(`memoryGameStats_${playerName}`);
+  const currentStats = savedStats ? JSON.parse(savedStats) : [];
+
+  let updatedStats: GameStats[];
+  
+  if (stats.type === "endless") {
+    updatedStats = [
+      ...currentStats.filter((s: { type: string; }) => s.type !== "endless"),
+      newStat
+    ];
+  } else {
+    updatedStats = [...currentStats, newStat];
+  }
+
+  // Сохраняем ОБЯЗАТЕЛЬНО с привязкой к playerName
+  localStorage.setItem(`memoryGameStats_${playerName}`, JSON.stringify(updatedStats));
+  setGameStats(updatedStats);
+};
+
+const handleCardClick = (id: number) => {
+  // клик не должен работать
+  if (
+    !isClickable || 
+    cards.find((card) => card.id === id)?.isFlipped || 
+    isGamePaused ||
+    selectedCards.length >= 2 
+  ) return;
+
+  if (gameType === "reverse" && timeLeft <= 0) return;
+
+  if (!isGameStarted) {
+    setIsGameStarted(true);
+  }
+
+  setIsClickable(false);
+
+  setCards((prevCards) =>
+    prevCards.map((card) =>
+      card.id === id ? { ...card, isFlipped: true } : card
+    )
+  );
+
+  setSelectedCards((prevSelected) => [...prevSelected, id]);
+
+  //сравниваем если 2 карты
+  if (selectedCards.length === 1) {
+    setMoves((prevMoves) => prevMoves + 1);
+    const [firstCardId] = selectedCards;
+    const firstCard = cards.find((card) => card.id === firstCardId);
+    const secondCard = cards.find((card) => card.id === id);
+
+    if (firstCard?.image === secondCard?.image) {
+      setSelectedCards([]);
+      setIsClickable(true);
+
+      if (gameType === "reverse") {
+        setTimeLeft((prevTime) => prevTime + 5); 
+      }
+    } else {
+      setTimeout(() => {
+        setCards((prevCards) =>
+          prevCards.map((card) =>
+            card.id === firstCardId || card.id === id
+              ? { ...card, isFlipped: false }
+              : card
+          )
+        );
+        setSelectedCards([]);
+        setIsClickable(true);
+      }, 1000);
+    }
+  } else {
+    setIsClickable(true);
+  }
+};
   const handleCardSetSelect = (set: keyof typeof cardSets) => {
     setCardSet(set);
     if (gameMode) {
@@ -222,10 +234,8 @@ const handleEndGame = () => {
       moves: moves,
       rounds: rounds,
       stopped: true, 
-      //date: new Date().toLocaleString()
     });
   }
-  // Показываем поздравления перед возвратом в меню
   setShowCongratulations(true);
   setIsGamePaused(true);
 };
@@ -243,27 +253,24 @@ const handleEndGame = () => {
     setShowTimeUpModal(false);
   };
 
-  const handleLogout = () => {
-    setPlayerName('');
-    setShowNameInput(true);
-    
-    localStorage.removeItem(`memoryGameStats_${playerName}`);
-    
-    setCards([]);
-    setMoves(0);
-    setTime(0);
-    setGameMode(null);
-  };
-
-
+const handleLogout = () => {
+  // Только сбрасываем состояние, НЕ удаляем из localStorage
+  setPlayerName('');
+  setShowNameInput(true);
+  setCards([]);
+  setMoves(0);
+  setTime(0);
+  setTimeLeft(0);
+  setGameMode(null);
+  setGameStats([]); // Сбрасываем локальную статистику, но не трогаем localStorage
+};
+ const allCardsFlipped = cards.length > 0 && cards.every(card => card.isFlipped);
 
   useEffect(() => {
     let interval: number | any
-
-    const allCardsFlipped = cards.length > 0 && cards.every(card => card.isFlipped);
   
   if (isGameStarted && !isGamePaused && !allCardsFlipped) {
-    if (gameType === "normal" || gameType === "endless") {
+    if (gameType === "normal") {
       interval = setInterval(() => {
         setTime(prev => prev + 1);
       }, 1000);
@@ -288,7 +295,7 @@ const handleEndGame = () => {
 
 
   useEffect(() => {
-    if (cards.length > 0 && cards.every(card => card.isFlipped)) {
+    if (allCardsFlipped) {
       if (gameType === "endless") {
         
         addGameStats({
@@ -306,16 +313,14 @@ const handleEndGame = () => {
           generateCards(gameMode!);
           setSelectedCards([]);
           setMoves(0);
-          setTime(0);
           setIsGameStarted(false);
           setShowCongratulations(false);
         }, 2000);
       } else {
-        // Обычный режим
         addGameStats({
           mode: gameMode!,
           type: gameType,
-          time: gameType === "reverse" ? initialTime - timeLeft : time,
+          time: gameType === "reverse" ? timeLeft : time,
           moves: moves,
           stopped: false
         });
@@ -393,8 +398,6 @@ const handleEndGame = () => {
                 gameType={gameType}
                 showCongratulations={showCongratulations}
                 showTimeUpModal={showTimeUpModal}
-                onNewGame={handleNewGame}
-                onReturnToMainMenu={handleReturnToMainMenu}
               />
               <GameBoard
                 cards={cards}

@@ -39,9 +39,6 @@ export interface GameStatusProps {
   showCongratulations: boolean;
   showTimeUpModal: boolean;
   rounds: number;
-  onEndGame?: () => void;
-  onNewGame: () => void;
-  onReturnToMainMenu: () => void;
 }
 
 export interface GameModeSelectorProps {

@@ -69,7 +69,7 @@ export default function PlayerStats({ playerName, stats }: PlayerStatsProps) {
                    stat.type === "reverse" ? "Таймер наоборот" : "Бесконечный"}
                 </span>
                 <span>{stat.time || "--"} сек</span>
-              <span>{stat.moves || "--"}</span>
+              <span>{stat.moves}</span>
               <span>{stat.rounds || "--"}</span>
                 <span>{stat.date}</span>
               </div>
@@ -96,7 +96,7 @@ export default function PlayerStats({ playerName, stats }: PlayerStatsProps) {
                  stat.type === "reverse" ? "Таймер наоборот" : "Бесконечный"}
               </span>
               <span>{stat.time || "--"} сек</span>
-              <span>{stat.moves || "--"}</span>
+              <span>{stat.moves}</span>
               <span>{stat.rounds || "--"}</span>
               <span>{stat.date}</span>
             </div>
