@@ -94,6 +94,7 @@ const handleNameSubmit = (e: React.FormEvent) => {
     setShowTimeUpModal(false);
     setIsClickable(true);
   };
+  
 const addGameStats = (stats: Omit<GameStats, 'date'>) => {
   const newStat = {
     ...stats,
@@ -114,13 +115,11 @@ const addGameStats = (stats: Omit<GameStats, 'date'>) => {
     updatedStats = [...currentStats, newStat];
   }
 
-  // Сохраняем ОБЯЗАТЕЛЬНО с привязкой к playerName
   localStorage.setItem(`memoryGameStats_${playerName}`, JSON.stringify(updatedStats));
   setGameStats(updatedStats);
 };
 
 const handleCardClick = (id: number) => {
-  // клик не должен работать
   if (
     !isClickable || 
     cards.find((card) => card.id === id)?.isFlipped || 
@@ -144,7 +143,6 @@ const handleCardClick = (id: number) => {
 
   setSelectedCards((prevSelected) => [...prevSelected, id]);
 
-  //сравниваем если 2 карты
   if (selectedCards.length === 1) {
     setMoves((prevMoves) => prevMoves + 1);
     const [firstCardId] = selectedCards;

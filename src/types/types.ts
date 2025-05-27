@@ -70,6 +70,11 @@ export interface GameBoardProps {
   isClickable: boolean;
 }
 
+export interface PlayerStatsProps {
+  playerName: string;
+  stats: GameStats[];
+}
+
 export interface CardSetSelectorProps {
   onSelectCardSet: (set: keyof typeof cardSets) => void;
 }

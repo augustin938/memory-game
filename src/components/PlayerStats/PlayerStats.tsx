@@ -1,3 +1,4 @@
+import { PlayerStatsProps } from "../../types/types";
 import styles from "./PlayerStats.module.css";
 
 interface GameStats {
@@ -10,10 +11,6 @@ interface GameStats {
   stopped?: boolean;
 }
 
-interface PlayerStatsProps {
-  playerName: string;
-  stats: GameStats[];
-}
 
 export default function PlayerStats({ playerName, stats }: PlayerStatsProps) {
   const getBestResults = () => {
